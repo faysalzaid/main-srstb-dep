@@ -41,7 +41,7 @@ export default function LandingPageNavBar() {
         >
           <Link to={'/'}>
           
-          SRS-RB
+          SRS-RBs
           </Link>
         </p>
       </div>

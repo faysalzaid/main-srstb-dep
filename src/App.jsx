@@ -15,7 +15,6 @@ import { url } from "./config/urlConfig";
 import Header from "./components/Header";
 import { createContext } from "react";
 import ResetPassword from "./pages/ResetPassword";
-import HomePage from "./pages/home";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import jwt_decode from "jwt-decode";
 import Chat from "./components/Chat/Chat";
@@ -24,7 +23,14 @@ import setCookie from "hooks/setCookie";
 import { BrowserRouter } from "react-router-dom/cjs/react-router-dom";
 
 const BlogPost = lazy(() => import("./components/Landing/BlogPost"));
+const Home = lazy(() => import("./components/Landing/NewWebsite/pages/Home"));
+const Contact = lazy(() => import("./components/Landing/NewWebsite/pages/contact"));
+const About = lazy(() => import("./components/Landing/NewWebsite/pages/about"));
+const Blog = lazy(() => import("./components/Landing/NewWebsite/pages/blogs"));
+const BlogDetail = lazy(() => import("./components/Landing/NewWebsite/pages/blogDet"));
 const BlogPostDetail = lazy(() => import("./components/Landing/BlogDetail"));
+const Members = lazy(() => import("./components/Landing/NewWebsite/pages/members"));
+const MembersDetail = lazy(() => import("./components/Landing/NewWebsite/pages/memberDet"));
 const JobsBlog = lazy(() => import("./components/Landing/Jobs"));
 const JobsDetail = lazy(() => import("./components/Landing/JobDetail"));
 const ApplyJob = lazy(() => import("./components/Landing/ApplyJob"));
@@ -68,11 +74,13 @@ function App(props) {
           <Route path="/create-account" component={CreateAccount} />
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/headers" component={Header} />
-          <Route path="/" exact component={BlogPost} />
-          <Route path="/:id" component={BlogPostDetail} />
-          <Route path="/jobs"  component={JobsBlog} />
-          <Route path="/jobs/:id" exact component={JobsDetail} />
-          <Route path="/jobs/:id/apply" exact component={ApplyJob} />
+          <Route path="/" exact component={Home} />
+          <Route path="/blogs"  component={Blog} />
+          <Route path="/about"  component={About} />
+          <Route path="/contact"  component={Contact} />
+          <Route path="/blog/:id" component={BlogDetail} />
+          <Route path="/members"  component={Members} />
+          <Route path="/members/:id" exact component={MembersDetail} />
           {/* If you have an index page, you can remothis Redirect */} 
           {/* <Route path={'/'} component={HomePage} /> */}
           {/* <Redirect exact from="/" to="/login" /> */}

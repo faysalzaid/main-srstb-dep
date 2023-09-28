@@ -1,7 +1,7 @@
 {
     "name": "cellu-crm-system",
     "version": "0.4.0",
-    "homepage": "/",
+    "homepage": "https://srsrb.gov.et",
     "description": "Cellu-Crm : A complete Project management system  .",
     "private": true,
     "scripts": {
@@ -70,6 +70,7 @@
         "recharts": "^2.5.0",
         "sass": "^1.56.1",
         "styled-components": "^6.0.0-rc.1",
+        "swiper": "^10.1.0",
         "yup": "^0.32.11"
     },
     "devDependencies": {
