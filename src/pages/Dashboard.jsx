@@ -70,8 +70,8 @@ function Dashboard(props) {
             
             return
           }
-          setProject(resp.data.projects);
-          const ddata = resp.data.projects?.filter((pr)=>{
+          setProject(resp.data?.projects);
+          const ddata = resp.data?.projects?.filter((pr)=>{
             const currentDate = new Date();
             const endTime = new Date(pr.endtime);
             return endTime.getTime() <= currentDate.getTime();
@@ -225,7 +225,7 @@ function Dashboard(props) {
               </p>
              
               <TableContainer className="mb-8">
-              {comments.length>0?
+              {comments?.length>0?
           <Table>
             <TableHeader>
               <tr>
@@ -239,27 +239,27 @@ function Dashboard(props) {
             </TableHeader>
           
             <TableBody>
-            {comments.map((prc, i) => (  
+            {comments?.map((prc, i) => (  
                 <TableRow key={i} >
                   <TableCell>
                     <div className="flex items-center text-sm">
                       
                       <div>
-                        <p className="font-semibold">{prc.comment}</p>
+                        <p className="font-semibold">{prc?.comment}</p>
                       </div>
                     </div>
                   </TableCell>
                   
                   
                   <TableCell>
-                    <span className="text-sm">{prc.Project.name}</span>
+                    <span className="text-sm">{prc?.Project?.name}</span>
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm">{prc.date}</span>
+                    <span className="text-sm">{prc?.date}</span>
                   </TableCell>
                   
                   <TableCell>
-                    <span className="text-sm">{prc.user}</span>
+                    <span className="text-sm">{prc?.user}</span>
                   </TableCell>
 
                   <TableCell>
@@ -269,7 +269,7 @@ function Dashboard(props) {
                   
                   <TableCell>
                     <div className="flex items-center space-x-4">
-                      <Link to={`/app/pglist/${prc.Project.id}`}>
+                      <Link to={`/app/pglist/${prc?.Project.id}`}>
                       <Button layout="link" size="icon" aria-label="Edit">
                         <EditIcon className="w-5 h-5" aria-hidden="true" />
                       </Button>
