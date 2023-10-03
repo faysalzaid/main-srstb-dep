@@ -269,7 +269,7 @@ function Dashboard(props) {
                   
                   <TableCell>
                     <div className="flex items-center space-x-4">
-                      <Link to={`/app/pglist/${prc?.Project.id}`}>
+                      <Link to={`/app/pglist/${prc?.Project?.id}`}>
                       <Button layout="link" size="icon" aria-label="Edit">
                         <EditIcon className="w-5 h-5" aria-hidden="true" />
                       </Button>
@@ -399,7 +399,7 @@ function Dashboard(props) {
             </TableHeader>
           
             <TableBody>
-            {procurement.map((prc, i) => (  
+            {procurement?.map((prc, i) => (  
                 <TableRow key={i} className="bg-red-200">
                   <TableCell>
                     <div className="flex items-center text-sm">
