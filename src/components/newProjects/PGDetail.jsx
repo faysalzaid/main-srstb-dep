@@ -202,7 +202,7 @@ const handleCloseError = (event, reason) => {
     // Project APproval
 
     const projectApproval =async()=>{
-      await axios.post(`${url}/projects/approve/${id}`).then((resp)=>{
+      await axios.post(`${url}/projects/approve/${id}`,{withCredentials:true}).then((resp)=>{
         if(resp.data.error){
           setOpenError({open:true,message:`${resp.data.error}`})
         }else{
