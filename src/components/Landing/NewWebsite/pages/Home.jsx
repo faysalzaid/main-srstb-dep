@@ -9,7 +9,7 @@ function Home()
 {
     useEffect(() =>
     {
-        document.title = 'Home';
+        document.title = 'Home-Srs Road Bureau';
     })
     return (
         <>

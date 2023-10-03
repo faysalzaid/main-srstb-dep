@@ -71,7 +71,7 @@ function Dashboard(props) {
             return
           }
           setProject(resp.data.projects);
-          const ddata = resp.data.projects.filter((pr)=>{
+          const ddata = resp.data.projects?.filter((pr)=>{
             const currentDate = new Date();
             const endTime = new Date(pr.endtime);
             return endTime.getTime() <= currentDate.getTime();
@@ -319,7 +319,7 @@ function Dashboard(props) {
 
 
               <TableContainer className="mb-8">
-              {deadlineProjects.length>0?
+              {deadlineProjects?.length>0?
           <Table>
             <TableHeader>
               <tr>
@@ -332,7 +332,7 @@ function Dashboard(props) {
             </TableHeader>
          
             <TableBody>
-            {deadlineProjects.map((project, i) => (  
+            {deadlineProjects?.map((project, i) => (  
                 <TableRow key={i} className="bg-red-200">
                   <TableCell>
                     <div className="flex items-center text-sm">
