@@ -223,12 +223,12 @@ const PgList = () => {
       useEffect(()=>{
         const getData =async()=>{
           await axios.get(`${url}/projects`,{withCredentials:true}).then((resp)=>{
-            if(resp.data.error){
-              console.log(resp.data.error);
+            if(resp.data?.error){
+              console.log(resp.data?.error);
             }
-          setProject(resp.data.projects)
-          setAllProjects(resp.data.projects)
-          const nD = resp.data.projects[0].endtime
+          setProject(resp.data?.projects)
+          setAllProjects(resp.data?.projects)
+          const nD = resp.data?.projects[0]?.endtime
           getDaysPassed(nD)
           // console.log(resp.data);
       
