@@ -28,7 +28,7 @@ import { AuthContext } from '../../hooks/authContext'
 import { url } from 'config/urlConfig'
 import { ErrorAlert, SuccessAlert } from "components/Alert";
 import useAuth from 'hooks/useAuth'
-import setCookie from 'hooks/setCookie'
+
 
 // make a copy of the data, for the second table
 

@@ -20,10 +20,7 @@ function Blogs()
                     <div className="mx-auto mt-3 md:max-w-3/4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                             <BlogContent />
-                            <BlogContent />
-                            <BlogContent />
                         </div>
-                        <Link className='btn bg-orange-500 hover:bg-orange-600 text-center block  text-white w-full py-3 px-4 mb-4'>VIEW ALL POSTS</Link>
                     </div>
                     <SideNav />
                 </div>

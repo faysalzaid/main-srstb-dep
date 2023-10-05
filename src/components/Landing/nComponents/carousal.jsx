@@ -27,7 +27,7 @@ export default function Carousal()
                     console.log(resp.data.error);
                 }
                 setBlogs(resp.data)
-                console.log(resp.data);
+                // console.log(resp.data);
             })
         }
 

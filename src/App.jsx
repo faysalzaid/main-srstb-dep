@@ -19,7 +19,6 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import jwt_decode from "jwt-decode";
 import Chat from "./components/Chat/Chat";
 import { ref } from "yup";
-import setCookie from "hooks/setCookie";
 import { BrowserRouter } from "react-router-dom/cjs/react-router-dom";
 
 const BlogPost = lazy(() => import("./components/Landing/BlogPost"));

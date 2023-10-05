@@ -37,7 +37,7 @@ const Navbar = () => {
     {
         const page = document.title;
         switch (page) {
-            case 'Home':
+            case 'Home-Srs Road Bureau':
                 setCur('Home');
                 break;
             case 'About Us':
@@ -67,7 +67,7 @@ const Navbar = () => {
                 {/* <h1 className='text-2xl font-bold'>SRS-Road Bureau</h1> */}
                 <ul className='desktop font-bold hidden md:flex'>
                     <li className={cur=='Home'?'p-4 text-lg text-orange-500 cursor-pointer' : 'p-4 text-lg cursor-pointer'}>
-                        <a className='text-sm hover:text-orange-500' onClick={navigateToHome}>HOME</a>
+                        <a className='text-sm hover:text-orange-500' onClick={navigateToHome}>Home</a>
                     </li>
                     <li className={cur == 'About' ? 'p-4 text-lg text-orange-500 cursor-pointer' : 'p-4 text-lg cursor-pointer'}>
                         <a className='text-sm hover:text-orange-500'  onClick={navigateToAbout}>About Us</a>

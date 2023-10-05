@@ -13,7 +13,7 @@ function BlogDet()
     return (
         <>
             <Navbar />
-            <Banner title="BLOG DETAIL" subtitle="TITLE OF THE BLOG"/>
+            <Banner title="BLOG DETAIL" subtitle="Reading More Info......."/>
             <BlogDetail/>
             <Footer />
         </>

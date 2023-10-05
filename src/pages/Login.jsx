@@ -15,7 +15,6 @@ import { AuthContext } from '../hooks/authContext'
 
 import { ErrorAlert, SuccessAlert } from "components/Alert";
 import TitleChange from 'components/Title/Title'
-import setCookie from 'hooks/setCookie'
 
 function Login(props) {
 

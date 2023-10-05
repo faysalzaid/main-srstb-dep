@@ -16,7 +16,6 @@ function BlogPost()
                 <div className="flex flex-col md:flex-row">
                     <div className="mx-auto mt-3 md:max-w-3/4">
                         <BlogContent />
-                        <Link to={'/'} className='btn bg-orange-500 hover:bg-orange-600 text-center block  text-white w-full py-3 px-4'>VIEW ALL POSTS</Link>
                     </div>
                     <SideNav/>
                 </div>
