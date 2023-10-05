@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import AccessibleNavigationAnnouncer from "./components/AccessibleNavigationAnnouncer";
 import { AuthContext } from "./hooks/authContext";
-import getCookie from "./hooks/getCookie";
+// import getCookie from "./hooks/getCookie";
 import { url } from "./config/urlConfig";
 import Header from "./components/Header";
 import { createContext } from "react";

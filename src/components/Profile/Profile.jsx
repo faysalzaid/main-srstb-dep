@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom'
 import PageTitle from '../../components/Typography/PageTitle'
 import SectionTitle from '../../components/Typography/SectionTitle'
 import axios from 'axios'
-import getCookie from 'hooks/getCookie'
+// import getCookie from 'hooks/getCookie'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Table,
