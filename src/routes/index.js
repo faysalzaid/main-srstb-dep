@@ -174,6 +174,15 @@ const OthersRequest = lazy(() =>
     import ("../request_pages/contents/OthersRequest")
 );
 
+
+const MembersList = lazy(() =>
+    import ("../components/Members/MembersList")
+);
+
+const MembersDetail = lazy(() =>
+    import ("../components/Members/MembersDetail")
+);
+
 /**
  * ⚠ These are internal routes!
  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -529,6 +538,17 @@ const routes = [{
     {
         path: "/bloglist/:id",
         component: BlogDetail,
+        roles: ["admin", "finance", "hr", "pRelation"],
+    },
+
+    {
+        path: "/members",
+        component: MembersList,
+        roles: ["admin", "finance", "hr", "pRelation"],
+    },
+    {
+        path: "/members/:id",
+        component: MembersDetail,
         roles: ["admin", "finance", "hr", "pRelation"],
     },
 ];

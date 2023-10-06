@@ -7,14 +7,16 @@ import { GithubIcon, TwitterIcon } from '../icons'
 import { Label, Input, Button } from '@windmill/react-ui'
 import * as Yup from 'yup'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
-import axios from 'axios'
+import axios from 'config/axiosConfig';import TitleChange from "components/Title/Title";
+
 import {url} from '../config/urlConfig'
 import { useState } from 'react'
 
 import { AuthContext } from '../hooks/authContext'
 
-import { ErrorAlert, SuccessAlert } from "components/Alert";
-import TitleChange from 'components/Title/Title'
+import { ErrorAlert, SuccessAlert } from "components/Alert";import 'config/custom-button.css'
+// 
+
 
 function Login(props) {
 
@@ -62,14 +64,12 @@ const onSubmit = async(data)=>{
         let data = response.data
         const userData ={
           id:data.id,
-          token: data.token,
           username:data.name,
           email: data.email,
           image:data.image,
           email:data.email,
           role:data.role,
           state:true,
-          accessToken:data.token
           // Add other properties as needed
         }
           const stringFied = JSON.stringify(userData?userData:undefined)
@@ -109,7 +109,7 @@ const initialValues ={
 
     <>
 <TitleChange name={`Login | ${settings.name}`}/>
-      <ErrorAlert
+      <TitleChange name={`${settings.name} | Dashboard`}/><ErrorAlert
         open={openError.open}
         handleClose={handleCloseError}
         message={openError.message}

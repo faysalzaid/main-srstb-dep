@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useState } from "react";
-// import getCookie from "./getCookie";
+
 import jwt_decode from 'jwt-decode'
 
 import { url } from "config/urlConfig";
@@ -96,19 +96,16 @@ useEffect(()=>{
             
             };
             const stringFied = JSON.stringify(usersData);
-            localStorage.setItem('User', stringFied);
             setAuthState({ id: data?.id, username: data?.name, email: data?.email, image: data?.image, role: data?.role, state: true });
-            const token = data.token; // Store the token in a variable
-            console.log('updated the token');
-            // console.log('sent the refresh success');
-            // return console.log(token); // Return the token
+            localStorage.setItem('User', stringFied);
+            console.log('called authcontext');
+  
         } catch (error) {
-            // console.error('Error from the grapauth', error);
             setAuthState({ id: '', username: '', email: '', image: '', role: '', state: false });
-            props.history.push('/login') // Rethrow the error to be caught by the interceptor
-
+            localStorage.setItem('User', "");
+            props.history.push('/login')
         }
-        },5*60*1000); // 5 minutes (in milliseconds)
+        },1*60*1000); // 5 minutes (in milliseconds)
     
         // Clean up the interval when the component unmounts
         return () => {

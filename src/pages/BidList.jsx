@@ -83,9 +83,11 @@ function BidList(props) {
     await axios.get(`${url}/users`,{withCredentials:true}).then((resp)=>{
       if(resp.data.error){
         setOpenError({open:true,message:`${resp.data.error}`});
+        // console.log('err');
       }else{
         const data = resp.data.filter((usr)=>usr.role==='client')
         setUsers(data)
+        // console.log('users',resp.data);
       }
     })
     await axios.get(`${url}/projects`,{withCredentials:true}).then((resp)=>{
@@ -93,7 +95,7 @@ function BidList(props) {
         setOpenError({open:true,message:`${resp.data.error}`});
       }else{
         setProjects(resp.data.projects)}
-        // console.log(resp.data.projects);
+        // console.log('project',resp.data.projects);
       
     })
 

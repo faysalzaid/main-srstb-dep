@@ -35,9 +35,9 @@ function SingleBlog()
                 <img className="max-h-96 w-full" src={blogs.image} alt="" />
                 <div className="mx-auto px-8 py-4">
                     <h3 className='text-left text-2xl pb-2 text-orange-500 font-bold'>{blogs?.title}</h3>                    <ul className='text-xs flex pt-4 border-b pb-4'>
-                        <li><p className='text-xs border-0 pr-2 border-r-2'>Name</p></li>
+                        <li><p className='text-xs border-0 pr-2 border-r-2'>{blogs?.user}</p></li>
                         <li><p className='text-xs px-1 border-0 border-r-2'>May 12, 2023</p></li>
-                        <li><p className='text-xs px-1'>12 comments</p></li>
+                  
                     </ul>
                     <div className="desc py-4 text-sm border-b">
                         <span className='mb-2'>{ReactHtmlParser(blogs?.description)}</span>
