@@ -182,6 +182,9 @@ const MembersList = lazy(() =>
 const MembersDetail = lazy(() =>
     import ("../components/Members/MembersDetail")
 );
+const RoadAssetList = lazy(() =>
+    import ("../components/RoadAsset/RoadAssetList")
+);
 
 /**
  * ⚠ These are internal routes!
@@ -550,6 +553,11 @@ const routes = [{
         path: "/members/:id",
         component: MembersDetail,
         roles: ["admin", "finance", "hr", "pRelation"],
+    },
+    {
+        path: "/roads",
+        component: RoadAssetList,
+        roles: ["admin", "finance", "roadquality"],
     },
 ];
 

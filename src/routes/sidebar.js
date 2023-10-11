@@ -80,6 +80,30 @@ routes = [{
         roles: ['admin', 'finance', 'roadquality', 'engineer', 'manager', 'planning']
     },
     {
+        icon: 'FaRoad',
+        name: 'Road Asset',
+        roles: ['admin', 'roadquality'],
+        routes: [
+            // submenu
+            {
+                path: '/app/roads',
+                icon: 'FaBroadcastTower',
+                name: 'Roads',
+                roles: ['admin', 'finance', 'roadquality']
+            },
+            {
+                path: '/app/members',
+                icon: 'FaPhoenixFramework',
+                name: 'Maintainance',
+                roles: ['admin', 'finance', 'roadquality']
+            },
+
+
+
+        ],
+    },
+
+    {
         path: '/app/archives',
         icon: 'FaRegFileArchive',
         name: 'Archives',
@@ -145,6 +169,7 @@ routes = [{
     {
         name: 'Office Info',
         icon: 'PagesIcon',
+        roles: ['admin', 'finance', 'hr'],
         routes: [
             // submenu
             {
@@ -202,10 +227,27 @@ routes = [{
     },
 
     {
-        path: '/app/bloglist',
         icon: 'FaHtml5',
         name: 'Website',
-        roles: ['admin', 'pRelation']
+        roles: ['admin', 'pRelation'],
+        routes: [
+            // submenu
+            {
+                path: '/app/bloglist',
+                icon: 'FaBlogger',
+                name: 'Blog',
+                roles: ['admin', 'finance', 'hr']
+            },
+            {
+                path: '/app/members',
+                icon: 'FaUsersCog',
+                name: 'Members',
+                roles: ['admin', 'finance', 'hr']
+            },
+
+
+
+        ],
     },
 
     // {

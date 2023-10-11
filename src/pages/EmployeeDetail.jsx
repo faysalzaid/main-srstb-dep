@@ -102,6 +102,7 @@ function EmployeeDetail(props) {
             // console.log('Employees',resp.data);
             if (resp.data.error) {
               setOpenError({ open: true, message: `${resp.data.error}` });
+              console.log('There was an error');
             } else {
               // console.log(resp.data);
               setEmployeeData(resp.data);
@@ -118,7 +119,7 @@ function EmployeeDetail(props) {
                 ssn: resp.data.ssn,
                 passportNo: resp.data.passportNo,
                 contactPhone: resp.data.contactPhone,
-                nationality: "Ethiopian",
+                nationality: resp.data,
                 address: resp.data.address,
                 birthday: resp.data.birthday,
                 postCode: resp.data.postCode,
@@ -486,16 +487,7 @@ function EmployeeDetail(props) {
               >
                 Timesheet
               </span>
-              <span
-                onClick={openAppraisal}
-                className={
-                  appraisalFile.status
-                    ? "px-4 py-2 mt-2 text-sm font-semibold text-white-400 rounded-lg bg-purple-700 hover:bg-purple-700 hover:text-white dark:text-gray-300"
-                    : "px-4 py-2 mt-2 text-sm font-semibold text-gray-700 rounded-lg hover:bg-purple-700 hover:text-white dark:text-gray-300"
-                }
-              >
-                Appraisals
-              </span>
+             
               <span
                 onClick={openAgreement}
                 className={

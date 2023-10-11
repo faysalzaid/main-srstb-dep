@@ -314,7 +314,7 @@ const handleChange = (e) => {
       <ModalHeader>Create Blog</ModalHeader>
       <ModalBody>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           
           <Label>
             <span>Title</span>
@@ -331,18 +331,11 @@ const handleChange = (e) => {
 
    
 
-          <ReactQuill
-          placeholder="Write Something Here...."
-          className=" mb-6"
-          modules={BlogList.modules}
-          value={blogForm.description}
-          onChange={handleChange}
-          />
 
-          <Label className="mt-6">
-            {/* <span>Category</span> */}
+          <Label>
+            <span>Category</span>
             <Select
-              className="mt-6"
+              className="mt-1"
               name="BlogCategoryId"
               // value={formValues.ProjectId}
               onChange={(e)=>setBlogForm({...blogForm,BlogCategoryId:e.target.value})}
@@ -357,7 +350,9 @@ const handleChange = (e) => {
             </Select>
           </Label>
 
-          <label htmlFor="file" className="w-full p-4 rounded-lg shadow-lg cursor-pointer text-center bg-gradient-to-r from-purple-400 to-pink-500 text-black hover:from-pink-500 hover:to-purple-400 transition duration-300">
+
+
+          <label htmlFor="file" className="w-full p-4 rounded-lg shadow-lg dark:text-white cursor-pointer text-center bg-gradient-to-r from-purple-400 to-pink-500 text-black hover:from-pink-500 hover:to-purple-400 transition duration-300">
                 <FaCloudUploadAlt className="w-8 h-8 mx-auto mb-2" />
                 <span className="text-lg font-semibold">Upload File</span>
               </label>
@@ -369,10 +364,16 @@ const handleChange = (e) => {
                 // required
                 onChange={(e)=>setBlogForm({...blogForm,image:e.target.files[0]})}
               />
-
-
               
         </div>
+
+        <ReactQuill
+          placeholder="Write Something Here...."
+          className=" mb-6"
+          modules={BlogList.modules}
+          value={blogForm.description}
+          onChange={handleChange}
+          />
         <Button className="mt-6 lg:block" type="submit">Submit</Button>
     
           

@@ -40,7 +40,6 @@ export const AuthContextProvider = withRouter((props) => {
 
 
 useEffect(()=>{
-
         const getData = async()=>{
           await axios.get(`${url}/settings`).then((resp)=>{
             const data = resp.data[0]
@@ -49,15 +48,15 @@ useEffect(()=>{
           // console.log(error);
       })
 
-          if(userData?.state!==true){
+          if(userData&&userData?.state!==true){
             if(history.location.pathname==='/login'){
                 return
             }else{
               history.push('/')
             }
-            }else{
+            }else if(userData){
               setAuthState({ id:userData?.id,username:userData?.username, email:userData?.email,image:userData?.image, role:userData?.role,state:true,accessToken:userData?.accessToken })
-              if(props.history.length>0){
+              if(history.length>0){
                 // console.log('hello')
                   // console.log(props.history);
                   if(history.location.pathname==='/login'){
@@ -103,7 +102,7 @@ useEffect(()=>{
         } catch (error) {
             setAuthState({ id: '', username: '', email: '', image: '', role: '', state: false });
             localStorage.setItem('User', "");
-            props.history.push('/login')
+            history.push('/login')
         }
         },1*60*1000); // 5 minutes (in milliseconds)
     

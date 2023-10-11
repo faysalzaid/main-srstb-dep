@@ -51,7 +51,12 @@ import {
     FaAward,
     FaCircleNotch,
     FaPlaceOfWorship,
-    FaHtml5
+    FaHtml5,
+    FaBlogger,
+    FaUsersCog,
+    FaRoad,
+    FaBroadcastTower,
+    FaPhoenixFramework
 } from 'react-icons/fa';
 import { BsCapsulePill } from 'react-icons/bs';
 
@@ -108,6 +113,11 @@ export {
     FaAward,
     FaCircleNotch,
     FaPlaceOfWorship,
-    FaHtml5
+    FaHtml5,
+    FaBlogger,
+    FaUsersCog,
+    FaRoad,
+    FaBroadcastTower,
+    FaPhoenixFramework
 
 }

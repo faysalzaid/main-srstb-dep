@@ -29,7 +29,7 @@ export const AgreementSection = ({
         if (resp.data.error) {
           setOpenError({ open: true, message: `${resp.data.error}` });
         } else {
-          console.log(resp.data);
+          // console.log(resp.data);
           setAgreementFile({
             file: resp.data.file,
             status: true,

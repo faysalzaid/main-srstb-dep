@@ -312,7 +312,7 @@ const MembersDetail = (props) => {
             />
           </Label>
 
-          <label htmlFor="file" className="w-full p-4 rounded-lg shadow-lg cursor-pointer text-center bg-gradient-to-r from-purple-400 to-pink-500 text-black hover:from-pink-500 hover:to-purple-400 transition duration-300">
+          <label htmlFor="file" className="w-full p-4 dark:text-white rounded-lg shadow-lg cursor-pointer text-center bg-gradient-to-r from-purple-400 to-pink-500 text-black hover:from-pink-500 hover:to-purple-400 transition duration-300">
                 <FaCloudUploadAlt className="w-8 h-8 mx-auto mb-2" />
                 <span className="text-lg font-semibold">Upload Image</span>
               </label>
