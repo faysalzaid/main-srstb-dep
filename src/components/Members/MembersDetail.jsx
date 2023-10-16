@@ -125,7 +125,7 @@ const MembersDetail = (props) => {
         formData.append('description',membersForm.description)
         formData.append('name',membersForm.name)
         formData.append('image',membersForm.image)
-        console.log(formData);
+        // console.log(formData);
         await axios.put(`${url}/members/${id}`,formData,{withCredentials:true}).then((resp)=>{
             if(resp.data.error){
                 setOpenError({open:true,message:`${resp.data.error}`})

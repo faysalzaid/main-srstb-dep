@@ -50,7 +50,7 @@ function ContractSection({ project, id }) {
               <TableCell>Subject</TableCell>
               <TableCell>Value</TableCell>
               <TableCell>Project</TableCell>
-              <TableCell>Contract Type</TableCell>
+            
               <TableCell>Status</TableCell>
               <TableCell>View</TableCell>
             </TableRow>
@@ -68,14 +68,11 @@ function ContractSection({ project, id }) {
                   </TableCell>
                   <TableCell>
                     <span className="text-sm">
-                      {contract.contractValue.toLocaleString()}
+                      {parseFloat(contract.contractValue).toLocaleString()}
                     </span>
                   </TableCell>
                   <TableCell>
                     <span className="text-sm">{project.name}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm"></span>
                   </TableCell>
 
                   <TableCell>

@@ -104,7 +104,7 @@ const ContractList = () => {
         const getData = async()=>{
 
 
-          await axios.get(`${url}/contract`).then((resp)=>{
+          await axios.get(`${url}/contract`,{withCredentials:true}).then((resp)=>{
             if(resp.data.error){
               setOpenError({open:true,message:true})
             }else{

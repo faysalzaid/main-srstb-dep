@@ -78,7 +78,8 @@ const ContractDetail = (props) => {
       contractValue: "",
       ContractTypeId: "",
       startDate: "",
-      endDate: ""
+      endDate: "",
+      status:""
     });
     const {id} = useParams()
 
@@ -88,12 +89,12 @@ const ContractDetail = (props) => {
     useEffect(()=>{
       const getData = async()=>{
 
-        await axios.get(`${url}/contract/${id}`).then((resp)=>{
+        await axios.get(`${url}/contract/${id}`,{withCredentials:true}).then((resp)=>{
           if(resp.data.error){
-            // console.log(resp.data);
             setOpenError({open:true,message:`${resp.data.error}`})
             
           }else{
+            // console.log(resp.data);
             // console.log(resp.data);
             setContracts({ 
               UserId: resp.data.UserId,
@@ -113,7 +114,8 @@ const ContractDetail = (props) => {
               contractValue: resp.data.contractValue,
               ContractTypeId: resp.data.ContractTypeId,
               startDate: resp.data.startDate,
-              endDate: resp.data.endDate
+              endDate: resp.data.endDate,
+              status:resp.data.status
             })
           }
       })
@@ -157,7 +159,7 @@ const ContractDetail = (props) => {
   
 
 
-      await axios.get(`${url}/attachment`).then((resp)=>{
+      await axios.get(`${url}/attachment`,{withCredentials:true}).then((resp)=>{
         if(resp.data.error){
           setOpenError({open:true,message:`$${resp.data.error}`})
         }else{
@@ -206,7 +208,8 @@ const ContractDetail = (props) => {
             contractValue: resp.data.contractValue,
             ContractTypeId: resp.data.ContractTypeId,
             startDate: resp.data.startDate,
-            endDate: resp.data.endDate
+            endDate: resp.data.endDate,
+            status:resp.data.status
           })
           setOpenSuccess({open:true,message:"Successfully Updated"})
           closeModal();
@@ -544,7 +547,24 @@ const ContractDetail = (props) => {
               required
             />
           </Label>
-          
+
+          <Label>
+            <span>Status</span>
+            <Select
+              className="mt-1"
+              name="status"
+              value={formValues.status}
+              onChange={(e)=>setFormValues({...formValues,status:e.target.value})}
+              required
+            >
+              <option disabled>Select Status</option>
+
+                <option value={'signed'}>Signed</option>
+                <option value={'unsigned'}>Unsigned</option>
+           
+              
+            </Select>
+          </Label>
 
               
         </div>
