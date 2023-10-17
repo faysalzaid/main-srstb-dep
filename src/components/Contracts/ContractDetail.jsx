@@ -311,7 +311,7 @@ const ContractDetail = (props) => {
   // Delete row
   const handleFileDelete = async(dfile) => {
     // Implement your own delete logic here
-    await axios.delete(`${url}/attachment/${dfile.id}`).then((resp)=>{
+    await axios.delete(`${url}/attachment/${dfile.id}`,{withCredentials:true}).then((resp)=>{
       if(resp.data.error){
         setOpenError({open:true,message:`${resp.data.error}`})
       }else{
@@ -330,7 +330,7 @@ const ContractDetail = (props) => {
 
 
   const handleDelete = async()=>{
-    await axios.delete(`${url}/contract/${id}`).then((resp)=>{
+    await axios.delete(`${url}/contract/${id}`,{withCredentials:true}).then((resp)=>{
       if(resp.data.error){
         setOpenError({open:true,message:`${resp.data.error}`})
       }else{

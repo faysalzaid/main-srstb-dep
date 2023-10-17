@@ -111,10 +111,28 @@ routes = [{
     },
 
     {
-        path: '/app/procurement',
+
         icon: 'FaCircleNotch',
         name: 'Procurement',
-        roles: ['admin', 'finance', 'design', 'engineer']
+        roles: ['admin', 'finance', 'design', 'engineer'],
+        routes: [
+            // submenu
+            {
+                path: '/app/procurement',
+                icon: 'FaRegLifeRing',
+                name: 'Procurements',
+                roles: ['admin', 'finance', 'roadquality']
+            },
+            {
+                path: '/app/procFile',
+                icon: 'FaFileSignature',
+                name: 'Pr.Files',
+                roles: ['admin', 'finance', 'roadquality']
+            },
+
+
+
+        ],
     },
     {
         path: '/app/requests',

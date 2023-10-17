@@ -45,7 +45,9 @@ import { url } from 'config/urlConfig'
 import axios from 'axios'
 import TitleChange from 'components/Title/Title'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
-import { FaTrashAlt } from 'react-icons/fa'
+import { FaCloudUploadAlt, FaTrashAlt } from 'react-icons/fa'
+import { RiDeleteBin6Line } from 'react-icons/ri'
+import { FiDownload } from 'react-icons/fi'
 
 
 
@@ -54,11 +56,11 @@ const ProcurementDetail = (props) => {
     const {authState,settings} = useContext(AuthContext)
     const [departments, setDepartments] = useState([]);
     const [users, setUsers] = useState([])
-    const [data, setData] = useState([])
     const [projects,setProject] = useState([])
-    const [contracts,setContracts] = useState([])
     const [countsData,setCountsData] = useState({ projectCount:"",bidCount:"",activeProjects:"",completedProjects:""})
     const [procurementData,setProcurementData] = useState({})
+    const [prFileForm,setPrFileForm] = useState({name:"",file:"",ProcurementId:""})
+    const [prFiles,setPrFiles] = useState([])
     const [procurementForm,setProcurementForm] = useState({
         timeToSell: "",
         budgetFrom: "",
@@ -127,21 +129,22 @@ const ProcurementDetail = (props) => {
           })
           await axios.get(`${url}/projects`,{withCredentials:true}).then((resp)=>{
             if(resp.data.error){
-              // console.log(resp.data.error);
             }
-          const data = resp.data.projects.filter((pr)=>pr.approved)  
-          setProject(data)
-      
+            const data = resp.data.projects.filter((pr)=>pr.approved)  
+            setProject(data)
+            
           })
-    
-          await axios.get(`${url}/users`,{withCredentials:true}).then((resp)=>{
+          
+          
+          await axios.get(`${url}/procFile`,{withCredentials:true}).then((resp)=>{
+            // console.log(resp.data);
             if(resp.data.error){
-    
+              setOpenError({open:true,message:true})
             }else{
-              const filteredClients = resp.data.filter((cl)=>cl.role==="client")
-              setUsers(filteredClients)
-            }
-          })
+              const data = resp.data.filter((pf)=>pf.ProcurementId==id)
+              setPrFiles(data)
+          }
+        })
     
     
           await axios.get(`${url}/departments`,{withCredentials:true}).then((resp)=>{
@@ -187,8 +190,6 @@ const ProcurementDetail = (props) => {
               setOpenError({open:true,message:"An unknown error occurred"});
             }
       })
-        // handle form submission here
-        // e.g. make an API call to save the form data
        
       };
 
@@ -247,6 +248,53 @@ const ProcurementDetail = (props) => {
     }
 
 
+
+    const handleUpload = async(e) => {
+      e.preventDefault();
+      // console.log(prFileForm);
+      const formData = new FormData()
+      formData.append('name',prFileForm.name)
+      formData.append('file',prFileForm.file)
+      formData.append('ProcurementId',id)
+      // console.log(formData);
+      await axios.post(`${url}/procFile`,formData,{withCredentials:true}).then((resp)=>{
+          if(resp.data.error){
+              setOpenError({open:true,message:`${resp.data.error}`})
+          }else{
+              setPrFiles((prev)=>[...prev,resp.data])
+              setOpenSuccess({open:true,message:"Successfully Added"})
+          }
+        
+
+      }).catch((error)=>{
+          if (error.response && error.response.data && error.response.data.error) {
+              setOpenError({open:true,message:`${error.response.data.error}`});
+            } else {
+              setOpenError({open:true,message:"An unknown error occurred"});
+            }
+      })
+     
+    };
+
+
+    const handleFileDelete = async(dfile) => {
+      // Implement your own delete logic here
+      await axios.delete(`${url}/procFile/${dfile.id}`,{withCredentials:true}).then((resp)=>{
+        if(resp.data.error){
+          setOpenError({open:true,message:`${resp.data.error}`})
+        }else{
+          const data = prFiles.filter((fl)=>fl.id!==dfile.id)
+          setPrFiles(data)
+          setOpenSuccess({open:true,message:"Successfully deleted"})
+        }
+      }).catch((error)=>{
+        if (error.response && error.response.data && error.response.data.error) {
+            setOpenError({open:true,message:`${error.response.data.error}`});
+          } else {
+            setOpenError({open:true,message:"An unknown error occurred"});
+          }
+    })
+    };
 
 
 // End of invoice data
@@ -479,7 +527,7 @@ const ProcurementDetail = (props) => {
       <div className="px-6 py-8">
         <div className="flex justify-between items-center">
           <div className=" items-center">
-        
+          <img src={settings.logo}alt="Company Logo" className="h-12 w-18 mr-2" />
           </div>
           <div className="text-right">
             <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Procurement #1234</p>
@@ -530,7 +578,74 @@ const ProcurementDetail = (props) => {
               </div>
               </div>
               </div>
+                 {/* Files LIst section */}
+                 <div className=" flex flex-col gap-4 mt-1 mb-6">
+                  {prFiles?.map((file, index) => (
+                  
+                    <div key={index} className="relative flex justify-between items-center bg-white rounded-md p-4 shadow-md">
+                      <div className="flex-1 truncate"><a href={`${file.file}`} target='_blank'>{file?.Name}</a></div>
+                      <button className="text-green-500 hover:text-red-600 mr-6">
+                        <a href={file?.file} target='_blank'>
+                        <FiDownload />
+                        </a>
+                      </button>
+                      <button onClick={() => handleFileDelete(file)} className="text-red-500 hover:text-red-600">
+                        <RiDeleteBin6Line />
+                      </button>
+                    </div>
+                  
+                  ))}
+                </div>
+
+          {/* End Files List */} 
+
+          {/* File Upload Form */}
+                        <form onSubmit={handleUpload}>
+                  <div className="grid grid-cols-1 gap-4">
+                    
+                    <Label>
+                      <span>Name</span>
+                      <Input
+                      //   type="date"
+                        className="mt-1"
+                        name="name"
+                        onChange={(e)=>setPrFileForm({...prFileForm,name:e.target.value})}
+                        required
+                      />
+                    </Label>
+
+                    <label htmlFor="file" className="w-full p-4 rounded-lg shadow-lg dark:text-white cursor-pointer text-center bg-gradient-to-r from-purple-400 to-pink-500 text-black hover:from-pink-500 hover:to-purple-400 transition duration-300">
+                          <FaCloudUploadAlt className="w-8 h-8 mx-auto mb-2" />
+                          <span className="text-lg font-semibold">Upload File</span>
+                        </label>
+                        <input
+                          type="file"
+                          id="file"
+                          className="hidden"
+                          name="image"
+                          onChange={(e)=>setPrFileForm({...prFileForm,file:e.target.files[0]})}
+                        />
+                  </div>
+                  <div className="hidden sm:block">
+
+                  <Button className="mt-2" type="submit">Submit</Button>
+                  </div>
+                    <div className=" mt-2 block  sm:hidden">
+                      <Button block size="large">
+                        Accept
+                      </Button>
+                    </div>
+                
+                  </form>
+
+                  {/* End of file upload Form */}
+        
               </div>
+
+     
+
+
+
 
       </>
     )

@@ -186,6 +186,10 @@ const RoadAssetList = lazy(() =>
     import ("../components/RoadAsset/RoadAssetList")
 );
 
+const ProcurementFileList = lazy(() =>
+    import ("../components/ProcurementFile/ProcurementFileList")
+);
+
 /**
  * ⚠ These are internal routes!
  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -557,6 +561,11 @@ const routes = [{
     {
         path: "/roads",
         component: RoadAssetList,
+        roles: ["admin", "finance", "roadquality"],
+    },
+    {
+        path: "/procFile",
+        component: ProcurementFileList,
         roles: ["admin", "finance", "roadquality"],
     },
 ];
