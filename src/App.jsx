@@ -80,7 +80,7 @@ function App(props) {
           <Route path="/contact"  component={Contact} />
           <Route path="/blog/:id" component={BlogDetail} />
           <Route path="/members"  component={Members} />
-          <Route path="/members/:id" exact component={MembersDetail} />
+          <Route path="/member"  component={MembersDetail} />
           {/* If you have an index page, you can remothis Redirect */} 
           {/* <Route path={'/'} component={HomePage} /> */}
           {/* <Redirect exact from="/" to="/login" /> */}
