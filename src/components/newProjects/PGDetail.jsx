@@ -46,6 +46,9 @@ import TitleChange from 'components/Title/Title'
 import AwardSection from 'components/AwardSection/AwardSection'
 import ProcurementSection from 'components/Procurement/ProcurementSection'
 import ReportSection from 'components/ReportSection/ReportSection'
+import OrderFileSection from 'components/OrderFileSection/OrderFileSection'
+import VariationFileSection from 'components/VariationFile/VariationFileSection'
+import DesignFileSection from 'components/DesignFiles/DesignFilesSection'
 
 
 
@@ -67,6 +70,9 @@ const PgDetail = () => {
     const [showBid,setShowBid] = useState(false)
     const [showAwards,setShowAwards] = useState(false)
     const [showReport,setShowReport] = useState(false)
+    const [showOrderFiles,setShowOrderFiles] = useState(false)
+    const [showVariationFiles,setShowVariationFiles] = useState(false)
+    const [showDesignFiles,setShowDesignFiles] = useState(false)
     const [isOpen,setIsOpen] = useState(false)
     const {authState,settings} = useContext(AuthContext)
 // Alert logic and initialization
@@ -237,9 +243,56 @@ setShowBudget(false)
 setShowBid(false)
 setShowComments(false)
 setShowReport(false)
+setShowOrderFiles(false)
+setShowVariationFiles(false)
+setShowDesignFiles(false)
 }
 
-function handleTask(){
+function handleOrderFiles(){
+  setShowOrderFiles(true)
+  setShowProcurement(false)
+  setShowAwards(false)
+  setShowContract(false)
+  setShowOverview(false)
+  setShowBudget(false)
+  setShowBid(false)
+  setShowComments(false)
+  setShowReport(false)
+  setShowVariationFiles(false)
+setShowDesignFiles(false)
+
+
+}
+
+function handleVariationFiles(){
+  setShowVariationFiles(true)
+  setShowOrderFiles(false)
+  setShowProcurement(false)
+  setShowAwards(false)
+  setShowContract(false)
+  setShowOverview(false)
+  setShowBudget(false)
+  setShowBid(false)
+  setShowComments(false)
+  setShowReport(false)
+  setShowDesignFiles(false)
+
+
+}
+
+function handleDesignFiles(){
+  setShowDesignFiles(true)
+  setShowVariationFiles(false)
+  setShowOrderFiles(false)
+  setShowProcurement(false)
+  setShowAwards(false)
+  setShowContract(false)
+  setShowOverview(false)
+  setShowBudget(false)
+  setShowBid(false)
+  setShowComments(false)
+  setShowReport(false)
+
 
 }
 
@@ -252,6 +305,9 @@ function handleBids(){
   setShowBid(true)
   setShowComments(false)
   setShowReport(false)
+  setShowOrderFiles(false)
+  setShowVariationFiles(false)
+setShowDesignFiles(false)
 
   }
 
@@ -265,6 +321,9 @@ function handleBudgets(){
   setShowBid(false)
   setShowComments(false)
   setShowReport(false)
+  setShowOrderFiles(false)
+  setShowVariationFiles(false)
+setShowDesignFiles(false)
   }
 
 function handleContracts(){
@@ -276,6 +335,9 @@ setShowBudget(false)
 setShowBid(false)
 setShowComments(false)
 setShowReport(false)
+setShowOrderFiles(false)
+setShowVariationFiles(false)
+setShowDesignFiles(false)
 }
 
 function handleComments(){
@@ -287,6 +349,9 @@ function handleComments(){
   setShowBid(false)
   setShowComments(true)
   setShowReport(false)
+  setShowOrderFiles(false)
+  setShowVariationFiles(false)
+setShowDesignFiles(false)
   }
 
 
@@ -299,6 +364,9 @@ function handleComments(){
     setShowBid(false)
     setShowComments(false)
     setShowReport(false)
+    setShowOrderFiles(false)
+    setShowVariationFiles(false)
+setShowDesignFiles(false)
     }
 
 
@@ -311,6 +379,9 @@ function handleComments(){
       setShowBid(false)
       setShowComments(false)
       setShowReport(false)
+      setShowOrderFiles(false)
+      setShowVariationFiles(false)
+setShowDesignFiles(false)
    
       }
 
@@ -325,6 +396,9 @@ function handleComments(){
       setShowBudget(false)
       setShowBid(false)
       setShowComments(false)
+      setShowOrderFiles(false)
+      setShowVariationFiles(false)
+setShowDesignFiles(false)
    
       }
 
@@ -679,6 +753,9 @@ navWrapper.classList.remove('active')
             <li className='nav-link dark:text-gray-300' onClick={()=>{handleComments(); hideNav()}}><FaCommentDots/> Comments</li>
             <li className='nav-link dark:text-gray-300' onClick={()=>{handleAwards(); hideNav()}}><FaAward/> Awards</li>
             <li className='nav-link dark:text-gray-300' onClick={()=>{handleProcurement(); hideNav()}}><FaCircleNotch/> Procurement</li>
+            <li className='nav-link dark:text-gray-300' onClick={()=>{handleOrderFiles(); hideNav()}}><AiOutlineFile/> OrderFiles</li>
+            <li className='nav-link dark:text-gray-300' onClick={()=>{handleVariationFiles(); hideNav()}}><AiOutlineFile/> Variation Files</li>
+            <li className='nav-link dark:text-gray-300' onClick={()=>{handleDesignFiles(); hideNav()}}><AiOutlineFile/> Design Files</li>
         </ul>
       </div>
       <div className='menu' onClick={handleMenu}>
@@ -696,7 +773,10 @@ navWrapper.classList.remove('active')
           {showAwards&&<AwardSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}
           {showReport&&<ReportSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}
           {showProcurement&&<ProcurementSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}
+          {showOrderFiles&&<OrderFileSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}
 
+          {showVariationFiles&&<VariationFileSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}
+          {showDesignFiles&&<DesignFileSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}
 
 
       </>
