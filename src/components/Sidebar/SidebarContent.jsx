@@ -26,8 +26,17 @@ function SidebarContent() {
       const n = newRoute.filter((r)=>r.roles?.find((r)=>r==='planning'))  
       setNewRoleRoutes(n)
     }
+    else if(authState.role=='planningAdmin'){
+      const n = newRoute.filter((r)=>r.roles?.find((r)=>r==='planningAdmin'))  
+      setNewRoleRoutes(n)
+    }
+    
     else if(authState.role=='finance'){
       const n = newRoute.filter((r)=>r.roles?.find((r)=>r==='finance'))  
+      setNewRoleRoutes(n)
+    }
+    else if(authState.role=='financeAdmin'){
+      const n = newRoute.filter((r)=>r.roles?.find((r)=>r==='financeAdmin'))  
       setNewRoleRoutes(n)
     }
     else if(authState.role=='engineer'){

@@ -207,9 +207,10 @@ const routes = [{
             "admin",
             "manager",
             "finance",
+            "financeAdmin",
             "design",
             "client",
-            "planning",
+            "planning", 'planningAdmin',
             "roadquality",
             "engineer",
             "contractadmin",
@@ -220,13 +221,17 @@ const routes = [{
     {
         path: "/bids",
         component: BidsList,
-        roles: ["admin", "finance", "engineer", "manager", "planning"],
+        roles: ["admin", "finance",
+            "financeAdmin", "engineer", "manager", "planning", 'planningAdmin'
+        ],
     },
 
     {
         path: "/bids/:id",
         component: BidDetail,
-        roles: ["admin", "finance", "engineer", "manager", "planning"],
+        roles: ["admin", "finance",
+            "financeAdmin", "engineer", "manager", "planning", 'planningAdmin'
+        ],
     },
 
     {
@@ -235,11 +240,12 @@ const routes = [{
         roles: [
             "admin",
             "finance",
+            "financeAdmin",
             "design",
             "engineer",
             "hr",
             "manager",
-            "planning",
+            "planning", 'planningAdmin',
         ],
     },
     {
@@ -248,28 +254,33 @@ const routes = [{
         roles: [
             "admin",
             "finance",
+            "financeAdmin",
             "design",
             "engineer",
             "hr",
             "manager",
-            "planning",
+            "planning", 'planningAdmin',
         ],
     },
     {
         path: "/departments/:id",
         component: DepartmentDetail,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
 
     {
         path: "/users",
         component: UsersList,
-        roles: ["admin", "finance", "manager", "hr"],
+        roles: ["admin",
+            "financeAdmin", "manager", "hr", 'planningAdmin'
+        ],
     },
     {
         path: "/users/:id",
         component: UsersDetail,
-        roles: ["admin", "finance", "manager", "hr"],
+        roles: ["admin", "finance",
+            "financeAdmin", "manager", "hr", 'planningAdmin'
+        ],
     },
 
     {
@@ -278,8 +289,9 @@ const routes = [{
         roles: [
             "admin",
             "finance",
+            "financeAdmin",
             "design",
-            "planning",
+            "planning", 'planningAdmin',
             "roadquality",
             "engineer",
             "contractadmin",
@@ -289,27 +301,27 @@ const routes = [{
     {
         path: "/designations",
         component: DesignationList,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/designations/:id",
         component: DesignationDetail,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/departments",
         component: DepartmentList,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/employees",
         component: EmployeeList,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/employees/:id",
         component: EmployeeDetail,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
 
     {
@@ -320,13 +332,17 @@ const routes = [{
     {
         path: "/requests",
         component: LetterRequests,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "finance",
+            "financeAdmin", "hr", 'planningAdmin'
+        ],
     },
 
     {
         path: "/requests/:id",
         component: LetterRequestsDetail,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "finance",
+            "financeAdmin", "hr", 'planningAdmin'
+        ],
     },
 
     {
@@ -336,9 +352,10 @@ const routes = [{
             "admin",
             "manager",
             "finance",
+            "financeAdmin",
             "design",
             "client",
-            "planning",
+            "planning", 'planningAdmin',
             "roadquality",
             "engineer",
             "contractadmin",
@@ -349,27 +366,33 @@ const routes = [{
     {
         path: "/invoice",
         component: InvoiceList,
-        roles: ["admin", "finance"],
+        roles: ["admin", "finance",
+            "financeAdmin"
+        ],
     },
     {
         path: "/invoice/:id",
         component: InvoiceDetailPage,
-        roles: ["admin", "finance"],
+        roles: ["admin", "finance",
+            "financeAdmin"
+        ],
     },
     {
         path: "/payment/:id",
         component: PaymentDetail,
-        roles: ["admin", "finance"],
+        roles: ["admin", "finance",
+            "financeAdmin"
+        ],
     },
     {
         path: "/contract",
         component: ContractList,
-        roles: ["admin", "manager", "finance", "contractadmin"],
+        roles: ["admin", "manager", "contractadmin"],
     },
     {
         path: "/contract/:id",
         component: ContractDetail,
-        roles: ["admin", "finance", "contractadmin"],
+        roles: ["admin", "contractadmin"],
     },
     {
         path: "/pglist",
@@ -377,10 +400,11 @@ const routes = [{
         roles: [
             "admin",
             "finance",
+            "financeAdmin",
             "roadquality",
             "engineer",
             "manager",
-            "planning",
+            "planning", 'planningAdmin',
         ],
     },
     {
@@ -389,71 +413,74 @@ const routes = [{
         roles: [
             "admin",
             "finance",
+            "financeAdmin",
             "roadquality",
             "engineer",
             "manager",
-            "planning",
+            "planning", 'planningAdmin',
         ],
     },
     {
         path: "/auther",
         component: UnAuthorized,
-        roles: ["admin", "finance", "planning", "engineer"],
+        roles: ["admin", "finance",
+            "financeAdmin", "planning", 'planningAdmin', "engineer"
+        ],
     },
     {
         path: "/leavetypelist",
         component: LeaveTypeList,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/leavelist",
         component: LeaveList,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/leave/:id",
         component: LeaveDetail,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/payroll",
         component: PayrollList,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/payroll/:id",
         component: payrollDetail,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/candidates",
         component: CandidateList,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/candidates/:id",
         component: CandidateDetail,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/candidate/shortlisted",
         component: ShortListedCandidates,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/candidate/selected",
         component: SelectedCandidates,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/timesheet",
         component: Timesheet,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/timesheet/:id",
         component: TimesheetDetail,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", "hr"],
     },
     {
         path: "/settings",
@@ -463,30 +490,32 @@ const routes = [{
     {
         path: "/reports/projects",
         component: ProjectReport,
-        roles: ["admin", "roadquality", "finance"],
+        roles: ["admin", "roadquality", "finance",
+            "financeAdmin"
+        ],
     },
 
     {
         path: "/profile",
         component: ProfilePage,
-        roles: ['admin', 'finance', 'design', 'client', 'roadquality', 'planning', 'engineer', 'contractadmin', 'hr', 'manager', 'pRelation']
+        roles: ['admin', 'finance', 'financeAdmin', 'design', 'client', 'roadquality', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'hr', 'manager', 'pRelation']
 
     },
 
     {
         path: "/archives",
         component: ArchiveList,
-        roles: ["admin", "roadquality", 'pRelation', "finance"],
+        roles: ["admin", "roadquality", 'pRelation', ],
     },
     {
         path: "/awards",
         component: AwardList,
-        roles: ["admin", "roadquality", "finance"],
+        roles: ["admin", "roadquality", ],
     },
     {
         path: "/awards/:id",
         component: AwardDetail,
-        roles: ["admin", "roadquality", "finance"],
+        roles: ["admin", "roadquality", ],
     },
     {
         path: "/procurement/",
@@ -515,58 +544,62 @@ const routes = [{
     {
         path: "/money_request",
         component: MoneyRequest,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", , "hr"],
     },
     {
         path: "/fuel_request",
         component: FuelRequest,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", , "hr"],
     },
     {
         path: "/car_rental_request",
         component: CarRentalRequest,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", , "hr"],
     },
     {
         path: "/equipment_request",
         component: EquipmentRequest,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", , "hr"],
     },
     {
         path: "/others_request",
         component: OthersRequest,
-        roles: ["admin", "finance", "hr"],
+        roles: ["admin", , "hr"],
     },
     {
         path: "/bloglist",
         component: BlogList,
-        roles: ["admin", "finance", "hr", "pRelation"],
+        roles: ["admin", "finance",
+            "financeAdmin", "hr", "pRelation"
+        ],
     },
     {
         path: "/bloglist/:id",
         component: BlogDetail,
-        roles: ["admin", "finance", "hr", "pRelation"],
+        roles: ["admin", "finance",
+            "financeAdmin", "hr", "pRelation"
+        ],
     },
 
     {
         path: "/members",
         component: MembersList,
-        roles: ["admin", "finance", "hr", "pRelation"],
+        roles: ["admin", "hr", "pRelation"],
     },
     {
         path: "/members/:id",
         component: MembersDetail,
-        roles: ["admin", "finance", "hr", "pRelation"],
+        roles: ["admin", "hr", "pRelation"],
     },
     {
         path: "/roads",
         component: RoadAssetList,
-        roles: ["admin", "finance", "roadquality"],
+        roles: ["admin", "roadquality"],
     },
     {
         path: "/procFile",
         component: ProcurementFileList,
-        roles: ["admin", "finance", "roadquality"],
+        roles: ["admin", "roadquality"],
     },
 ];
 

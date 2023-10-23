@@ -37,33 +37,33 @@ routes = [{
         path: '/app/dashboard', // the url
         icon: 'HomeIcon', // the component being exported from icons/index.js
         name: 'Dashboard', // name that appear in Sidebar
-        roles: ['admin', 'finance', 'design', 'client', 'roadquality', 'planning', 'engineer', 'contractadmin', 'hr', 'manager', 'pRelation']
+        roles: ['admin', 'finance', 'financeAdmin', 'design', 'client', 'roadquality', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'hr', 'manager', 'pRelation']
     },
     {
         path: '/app/companies',
         icon: 'SunIcon',
         name: 'Companies',
-        roles: ['admin', 'finance', 'design', 'roadquality', 'engineer', 'contractadmin', 'hr', 'manager', 'planning']
+        roles: ['admin', 'finance', 'financeAdmin', 'design', 'roadquality', 'engineer', 'contractadmin', 'hr', 'manager', 'planning', 'planningAdmin']
     },
 
     {
         path: '/app/bids',
         icon: 'FormsIcon',
         name: 'Bids',
-        roles: ['admin', 'finance', 'engineer', 'manager', 'planning']
+        roles: ['admin', 'finance', 'financeAdmin', 'engineer', 'manager', 'planning', 'planningAdmin']
     },
 
     {
         path: '/app/users',
         icon: 'PeopleIcon',
         name: 'Users',
-        roles: ['admin', 'finance', 'manager', 'hr']
+        roles: ['admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin']
     },
     {
         path: '/app/charts',
         icon: 'ChartsIcon',
         name: 'Charts',
-        roles: ['admin', 'finance', 'design', 'roadquality', 'planning', 'engineer', 'contractadmin', 'hr', 'manager']
+        roles: ['admin', 'finance', 'financeAdmin', 'design', 'roadquality', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'hr', 'manager']
     },
 
 
@@ -71,13 +71,13 @@ routes = [{
         path: '/app/chat',
         icon: 'ChatIcon',
         name: 'Chat',
-        roles: ['admin', 'finance', 'design', 'client', 'roadquality', 'planning', 'engineer', 'contractadmin', 'hr', 'manager', 'pRelation']
+        roles: ['admin', 'finance', 'financeAdmin', 'design', 'client', 'roadquality', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'hr', 'manager', 'pRelation']
     },
     {
         path: '/app/pglist',
         icon: 'TablesIcon',
         name: 'Projects',
-        roles: ['admin', 'finance', 'roadquality', 'engineer', 'manager', 'planning']
+        roles: ['admin', 'finance', 'financeAdmin', 'roadquality', 'engineer', 'manager', 'planning', 'planningAdmin']
     },
     {
         icon: 'FaRoad',
@@ -89,13 +89,13 @@ routes = [{
                 path: '/app/roads',
                 icon: 'FaBroadcastTower',
                 name: 'Roads',
-                roles: ['admin', 'finance', 'roadquality']
+                roles: ['admin', 'roadquality']
             },
             {
                 path: '/app/members',
                 icon: 'FaPhoenixFramework',
                 name: 'Maintainance',
-                roles: ['admin', 'finance', 'roadquality']
+                roles: ['admin', 'roadquality']
             },
 
 
@@ -107,27 +107,27 @@ routes = [{
         path: '/app/archives',
         icon: 'FaRegFileArchive',
         name: 'Archives',
-        roles: ['admin', 'finance', 'design', 'engineer', 'pRelation']
+        roles: ['admin', 'design', 'engineer', 'pRelation']
     },
 
     {
 
         icon: 'FaCircleNotch',
         name: 'Procurement',
-        roles: ['admin', 'finance', 'design', 'engineer'],
+        roles: ['admin', 'design', 'engineer'],
         routes: [
             // submenu
             {
                 path: '/app/procurement',
                 icon: 'FaRegLifeRing',
                 name: 'Procurements',
-                roles: ['admin', 'finance', 'roadquality']
+                roles: ['admin', 'roadquality']
             },
             {
                 path: '/app/procFile',
                 icon: 'FaFileSignature',
                 name: 'Pr.Files',
-                roles: ['admin', 'finance', 'roadquality']
+                roles: ['admin', 'roadquality']
             },
 
 
@@ -138,48 +138,50 @@ routes = [{
         path: '/app/requests',
         icon: 'CardsIcon',
         name: 'Letter Requests',
-        roles: ['admin', 'finance', 'hr']
+        roles: ['admin', 'finance', 'financeAdmin', 'hr', 'planning', 'planningAdmin']
     },
 
     // {
     //     path: '/app/designations',
     //     name: 'Designations',
     //     icon: 'PagesIcon',
-    //     roles: ['admin', 'finance']
+    //     roles: ['admin', 'finance']'financeAdmin',
     // },
     // {
     //     path: '/app/employees',
     //     icon: 'MoonIcon',
     //     name: 'Employees',
-    //     roles: ['admin', 'finance']
+    //     roles: ['admin', 'finance']'financeAdmin',
     // },
     {
         path: '/app/invoice',
         icon: 'FaFileInvoiceDollar',
         name: 'Invoices',
-        roles: ['admin', 'finance']
+        roles: ['admin', 'finance', 'financeAdmin', ]
+
     },
     {
         path: '/app/awards',
         icon: 'FaAward',
         name: 'Awards',
-        roles: ['admin', 'finance']
+        roles: ['admin', ]
+
     },
     {
         path: '/app/contract',
         icon: 'FaFileContract',
         name: 'Contracts',
-        roles: ['admin', 'finance', 'contractadmin']
+        roles: ['admin', 'contractadmin']
     },
     {
         name: 'Reports',
         icon: 'FaReadme',
-        roles: ['admin', 'finance', 'roadquality'],
+        roles: ['admin', 'finance', 'financeAdmin', 'roadquality', 'planningAdmin'],
         routes: [{
             path: '/app/reports/projects',
             icon: 'FaRoute',
             name: 'Projects',
-            roles: ['admin', 'finance', 'hr']
+            roles: ['admin', 'finance', 'financeAdmin', 'hr', 'planningAdmin']
         }, ]
     },
 
@@ -187,57 +189,57 @@ routes = [{
     {
         name: 'Office Info',
         icon: 'PagesIcon',
-        roles: ['admin', 'finance', 'hr'],
+        roles: ['admin', 'hr'],
         routes: [
             // submenu
             {
                 path: '/app/employees',
                 icon: 'MoonIcon',
                 name: 'Employees',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
             {
                 path: '/app/designations',
                 name: 'Designations',
                 icon: 'PagesIcon',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
             {
                 path: '/app/departments',
                 name: 'Departments',
                 icon: 'SearchIcon',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
             {
                 path: '/app/leavetypelist',
                 name: 'LeaveType',
                 icon: 'FaPills',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
             {
                 path: '/app/leavelist',
                 name: 'Leaves',
                 icon: 'FaHandHoldingMedical',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
             {
                 path: '/app/area',
                 name: 'Areas',
                 icon: 'FaPlaceOfWorship',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
             {
                 path: '/app/payroll',
                 name: 'Payroll',
                 icon: 'FaMoneyCheckAlt',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
 
             {
                 path: '/app/timesheet',
                 name: 'M.timesheet',
                 icon: 'FaUserClock',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
 
 
@@ -254,13 +256,13 @@ routes = [{
                 path: '/app/bloglist',
                 icon: 'FaBlogger',
                 name: 'Blog',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
             {
                 path: '/app/members',
                 icon: 'FaUsersCog',
                 name: 'Members',
-                roles: ['admin', 'finance', 'hr']
+                roles: ['admin', 'hr']
             },
 
 
@@ -277,19 +279,19 @@ routes = [{
     //             path: '/app/candidates',
     //             icon: 'FaIoxhost',
     //             name: 'Candidates',
-    //             roles: ['admin', 'finance', 'hr']
+    //             roles: ['admin', 'finance','financeAdmin', 'hr']
     //         },
     //         {
     //             path: '/app/candidate/shortlisted',
     //             icon: 'FaSlideshare',
     //             name: 'ShortListed',
-    //             roles: ['admin', 'finance', 'hr']
+    //             roles: ['admin', 'finance','financeAdmin', 'hr']
     //         },
     //         {
     //             path: '/app/candidate/selected',
     //             icon: 'FaHandsHelping',
     //             name: 'Selected',
-    //             roles: ['admin', 'finance', 'hr']
+    //             roles: ['admin', 'finance','financeAdmin', 'hr']
     //         },
 
 

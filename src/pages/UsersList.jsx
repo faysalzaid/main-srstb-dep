@@ -358,11 +358,16 @@ const handleCloseError = (event, reason) => {
                   {authState.role==="admin" || authState.role==="manager"? <option value="manager">Manager</option> :""}
                   <option value="pRelation">Public Relation</option>
                   <option value="contractadmin">Contract Admin</option>
+                  <option value="contract">Contract</option>
+                  <option value="roadqualityAdmin">RoadQualityAdmin</option>
                   <option value="roadquality">Road Quality</option>
+                  {authState.role==="admin"||authState.role==="financeAdmin"||authState.role==="manager"?<option value="financeAdmin">FinanceAdmin</option>:""}
                   <option value="finance">Finance</option>
+                  <option value="designAdmin">DesignAdmin</option>
                   <option value="design">Design</option>
                   <option value="client">Client</option>
                   <option value="engineer">Engineer</option>
+                  <option value="planningAdmin">PlanningAdmin</option>
                   <option value="planning">Planning</option>
                   <option value="hr">HR</option>
                 </Field>

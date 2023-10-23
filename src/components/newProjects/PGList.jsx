@@ -439,9 +439,9 @@ const PgList = () => {
   
         <TableContainer>
    
-          {authState.role==="admin" || authState.role==="engineer" || authState.role==="manager" || authState.role==="planning" || authState.role==="finance" ?
+        {authState.role==="admin"||authState.role==="financeAdmin"||authState.role==="designAdmin"||authState.role==="manager"||authState.role==="roadqualityAdmin"||authState.role==="planningAdmin"||authState.role==="planning"||authState.role==="contractadmin"?
         <Button size="small" onClick={openModal}>New Project</Button>
-        :<span>Read Only</span>}
+        :<Badge type="danger">UnAuthorized</Badge>}
 
 
 <div className="max-w-screen-lg flex flex-col sm:flex-row">
@@ -492,7 +492,10 @@ const PgList = () => {
   
         </TableContainer>
         <Modal isOpen={isOpen} onClose={closeModal}>
+      
+      
       <ModalHeader>Add Project</ModalHeader>
+  
       <ModalBody>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">

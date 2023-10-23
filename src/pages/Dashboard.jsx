@@ -42,7 +42,7 @@ import Line_Chart from "global/recharts/Line_Chart";
 import Area_Chart from "global/recharts/Area_Chart";
 
 import { Button } from "@mui/material";
-import useGrapAuth from "hooks/useRefresh";
+// import useGrapAuth from "hooks/useRefresh";
 
 
 function Dashboard(props) {
@@ -51,6 +51,9 @@ function Dashboard(props) {
   const [deadlineProjects,setDeadlineProjects] = useState([])
   const [projects, setProject] = useState([]);
   const [comments,setComments] = useState([])
+  const [budgets,setBudgets] = useState([])
+  const [tracks,setTracks] = useState([])
+  const [notApprovedOnes,setNotApprovedOnes] = useState([])
   const [countsData, setCountsData] = useState({
     projectCount: "",
     bidCount: "",
@@ -58,7 +61,7 @@ function Dashboard(props) {
     completedProjects: "",
   });
   const [authorization, setAuthorization] = useState(false);
-  const refresh = useGrapAuth()
+  // const refresh = useGrapAuth()
   // console.log('data from app',authState);
   useEffect(() => {
     const getData = async () => {
@@ -71,13 +74,17 @@ function Dashboard(props) {
             return
           }
           setProject(resp.data?.projects);
+          // console.log('projects',resp.data.projects);
           const ddata = resp.data?.projects?.filter((pr)=>{
             const currentDate = new Date();
             const endTime = new Date(pr.endtime);
             return endTime.getTime() <= currentDate.getTime();
           })
-          // console.log(ddata);
+
+          const nApproved = resp.data?.projects?.filter((pr)=>pr.approved===false)
+          // console.log('The not',nApproved);
           setDeadlineProjects(ddata)
+          setNotApprovedOnes(nApproved)
         })
         .catch((err) => {
          return
@@ -111,6 +118,31 @@ function Dashboard(props) {
     };
 
 
+    const getBudgets = async () => {
+      await axios
+        .get(`${url}/budget`, { withCredentials: true })
+        .then((resp) => {
+          // console.log(resp.data);
+          if(resp.data.error) return
+          const data = resp.data.filter((dt)=>dt.approved===false);
+          // console.log(data);
+          setBudgets(data)
+        });
+    };
+
+    const getTracks = async () => {
+      await axios
+        .get(`${url}/budget/tracks`, { withCredentials: true })
+        .then((resp) => {
+          // console.log(resp.data);
+          if(resp.data.error) return
+          const data = resp.data.filter((dt)=>dt.invoiced===0);
+          // console.log(data);
+          setTracks(data)
+        });
+    };
+
+
     const getProcurements = async()=>{
       await axios.get(`${url}/procurement`,{withCredentials:true}).then((resp)=>{
           if(resp.data.error){
@@ -125,11 +157,16 @@ function Dashboard(props) {
           }
       })
     }
+
+
+
    
     getProcurements()
     getCounts();
     getData();
     getComments()
+    getBudgets()
+    getTracks()
 
     // console.log('favicon');
   }, []);
@@ -219,6 +256,10 @@ function Dashboard(props) {
           </TableContainer>
 
 
+          {authState.role==="planningAdmin"||authState.role==="planning"?
+          <>
+          
+          {/* Comments Section */}
           <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
               <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
               Pending Comments.
@@ -283,16 +324,238 @@ function Dashboard(props) {
               
                 
           </Table>
-             :<span className="text-center mb-4 mt-4">No comments available</span>}
+             :<span className="text-center mb-4 mt-4">No Comments Available</span>}
           <TableFooter>
           </TableFooter>
         </TableContainer>
 
-       
-            
-
-              {/* <OngoingProjects /> */}
             </div>
+
+            {/* End of Unapproved Projects Section */}
+
+ {/* Unapproved Projects Section */}
+ <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Projects That Need Approval.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {notApprovedOnes?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+              <TableCell>Name</TableCell>
+                <TableCell>P.Cost</TableCell>
+                <TableCell>Start Date</TableCell>
+                <TableCell>End Date</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {notApprovedOnes?.map((project, i) => (  
+                <TableRow key={i} className="bg-red-200">
+                <TableCell>
+                  <div className="flex items-center text-sm">
+                    
+                    <div>
+                      <p className="font-semibold">{project.name}</p>
+                    </div>
+                  </div>
+                </TableCell>
+                
+                
+                <TableCell>
+                  <span className="text-sm">ETB-{parseFloat(project.totalCost).toLocaleString()}</span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm">{project.starttime}</span>
+                </TableCell>
+                
+                <TableCell>
+                  <span className="text-sm">{project.endtime}</span>
+                </TableCell>
+                
+                
+                <TableCell>
+                  <div className="flex items-center space-x-4">
+                    <Link to={`/app/pglist/${project.id}`}>
+                    <Button layout="link" size="icon" aria-label="Edit">
+                      <EditIcon className="w-5 h-5" aria-hidden="true" />
+                    </Button>
+                    </Link>
+                  
+                  </div>
+                </TableCell>
+              </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4">No Projects Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+            {/* End of Unapproved Projects Section */}
+          </>:""
+          }
+
+
+
+          
+
+          {authState.role==="financeAdmin"||authState.role==="finance"?
+          <>
+          {/* Budgets Section */}
+          <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Budgets Need Approval.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {budgets?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Year</TableCell>
+                <TableCell>Project</TableCell>
+                <TableCell>Allocated Budget</TableCell>
+               
+                <TableCell>Approved</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {budgets?.map((bd, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{bd?.year}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{bd?.Project?.name}</span>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm">ETB-{parseFloat(bd?.allocatedBudget).toLocaleString()}</span>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className="text-sm"><Badge type="danger">Not Approved</Badge></span>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/pglist/${bd?.Project?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4">No Budgets Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+
+            {/* End of Budgets Section Section */}
+
+
+
+             {/* Tracks Section */}
+          <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Payments That Need To Be Invoiced.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {tracks?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Date</TableCell>
+                <TableCell>Project</TableCell>
+                <TableCell>Amount</TableCell>
+                <TableCell>Approved</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {tracks?.map((bd, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{bd?.date}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{bd?.yearlyBudget?.Project?.name}</span>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm">ETB-{parseFloat(bd?.utilized).toLocaleString()}</span>
+                  </TableCell>
+                  
+                
+
+                 
+                  <TableCell>
+                    <span className="text-sm"><Badge type="danger">Not Approved</Badge></span>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/pglist/${bd?.yearlyBudget?.Project?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4">No Payments Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+
+            {/* End of Tracks Section Section */}
+            </>:""
+          }
+
+
 
 
 

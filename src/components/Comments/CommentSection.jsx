@@ -249,6 +249,8 @@ function CommentSection({ project, id }) {
         <p className="text-gray-800 dark:text-gray-300 font-bold">{cm.user}</p>
         <p className="text-gray-500 text-sm dark:text-gray-300">{new Date(cm.date).toLocaleString('en-US',options)}</p>
       </div>
+      {authState.role==="admin"||authState.role==="planningAdmin"||authState.role==="manager"?
+      
       <div className="ml-auto flex">
         {cm.approved? 
         <span className='px-2 py-1 rounded-full bg-green-500 text-white text-xs' onClick={()=>handleApprove(cm.id)}>Decline</span>:
@@ -256,7 +258,8 @@ function CommentSection({ project, id }) {
         }
 
         <FaTrashAlt className="mt-1 ml-2 mr-4 text-red-600" onClick={()=>openDelete(cm.id)}/>
-      </div>
+      </div>:<div className="ml-auto flex"><Badge type="danger">UnAuthorized</Badge></div>
+    }
     </div>
     <p className="text-gray-700 dark:text-gray-300">{cm.comment}.</p>
   </div>

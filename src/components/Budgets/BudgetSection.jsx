@@ -460,9 +460,12 @@ function BudgetList({ id, budgets, setBudgets, invoiceIds ,project}) {
 
         <PageTitle>
           Budgets{" "}
+          {authState.role==="finance"||authState.role==="financeAdmin"||authState.role==="admin"||authState.role==="manager"?
           <Button className="ml-4" size="small" onClick={onOpen}>
             add Budget
-          </Button>
+          </Button>:<Badge type="danger">UnAuthorized</Badge>
+          
+        }
         </PageTitle>
         <div></div>
 
@@ -508,12 +511,6 @@ function BudgetList({ id, budgets, setBudgets, invoiceIds ,project}) {
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
                       >
                         Utilize
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-                      >
-                        Edit
                       </th>
                       <th
                         scope="col"
@@ -576,7 +573,7 @@ function BudgetList({ id, budgets, setBudgets, invoiceIds ,project}) {
                             </td>
                           )}
                         
-                          <td
+                       { authState.role==="finance"||authState.role==="financeAdmin"||authState.role==="admin"||authState.role==="manager"?  <td
                             className=" px-6 py-4 whitespace-nowrap"
                             style={{ color: "green" }}
                           >
@@ -596,14 +593,10 @@ function BudgetList({ id, budgets, setBudgets, invoiceIds ,project}) {
                             ) : (
                               <Badge type="danger">UnApproved</Badge>
                             )}
-                          </td>
-                          <td
-                            className=" px-6 py-4 whitespace-nowrap"
-                            style={{ color: "blue" }}
-                          >
-                            <FaEdit className="ml-3" />
-                          </td>
-                          <td
+                          </td>:<td><Badge type="danger">UnAuthorized</Badge></td>}
+                          
+                         {authState.role === "financeAdmin" ||
+                          authState.role === "admin"||authState.role==="manager" ? <td
                             className=" px-6 py-4 whitespace-nowrap"
                             style={{ color: "red" }}
                           >
@@ -613,9 +606,9 @@ function BudgetList({ id, budgets, setBudgets, invoiceIds ,project}) {
                                 setIsDeleteOpen({ open: true, id: row.id })
                               }
                             />
-                          </td>
-                          {authState.role === "finance" ||
-                          authState.role === "admin" ? (
+                          </td>:<td><Badge type="danger">UnAuthorized</Badge></td>}
+                          {authState.role === "financeAdmin" ||
+                          authState.role === "admin"||authState.role==="manager" ? (
                             <td className="px-6  py-4 whitespace-nowrap">
                               <Button
                                 size="small"
@@ -667,13 +660,13 @@ function BudgetList({ id, budgets, setBudgets, invoiceIds ,project}) {
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                       >
-                                        Created By
+                                        CreatedBy
                                       </th>
                                       <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                       >
-                                        Add To Payment
+                                        Invoice
                                       </th>
                                       <th
                                         scope="col"
@@ -700,6 +693,8 @@ function BudgetList({ id, budgets, setBudgets, invoiceIds ,project}) {
                                         </td>
 
                                         {detail.invoiced === 0 ? (
+                                          <>
+                                          {authState.role==="admin"||authState.role==="financeAdmin"?
                                           <td className="px-6 py-4 whitespace-nowrap">
                                             <Badge type="danger">
                                               <FaPlusCircle
@@ -712,14 +707,15 @@ function BudgetList({ id, budgets, setBudgets, invoiceIds ,project}) {
                                                 }
                                                 className="mt-1 mr-1"
                                               />
-                                              Invoice{" "}
-                                            </Badge>{" "}
-                                          </td>
+                                              Invoce?
+                                            </Badge>
+                                          </td>:<td><Badge type="danger">UnAuthorized</Badge></td>}
+                                          </>
                                         ) : (
                                           <td className="px-6 py-4 whitespace-nowrap">
-                                            <Badge>
+                                            <Badge type="success">
                                               <FaCheckCircle className="mt-1 mr-1" />
-                                              Invoiced{" "}
+                                              Invoiced
                                             </Badge>
                                           </td>
                                         )}
