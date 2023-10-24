@@ -50,7 +50,7 @@ useEffect(()=>{
 
           if(!userData||userData?.state!==true){
             if (history.location.pathname !== '/login') {
-              history.push('/login');
+              // history.push('/login');
             }
             }else if(userData&&userData.state===true){
               setAuthState({ id:userData?.id,username:userData?.username, email:userData?.email,image:userData?.image, role:userData?.role,state:true, })
