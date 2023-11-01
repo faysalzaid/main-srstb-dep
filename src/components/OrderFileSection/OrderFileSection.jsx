@@ -39,8 +39,16 @@ function OrderFileSection({ bid, project, users, setBids, setProject }) {
   const [orderFileData,setOrderFileData] = useState([])
   const {authState} = useContext(AuthContext)
     useEffect(()=>{
-   
-        setOrderFileData(project?.orderFiles)
+        const getData =async()=>{
+          await axios.get(`${url}/orderFile/single/${project?.id}`,{withCredentials:true}).then((resp)=>{
+            if(resp.data.error) return 
+            // console.log(resp.data);
+            setOrderFileData(resp.data)
+
+          })
+        }
+        getData()
+        // setOrderFileData(project?.orderFiles)
     },[])
   const onBidSelect = () => {
     setBidSelect({ open: true });
@@ -132,6 +140,26 @@ function OrderFileSection({ bid, project, users, setBids, setProject }) {
   }
 
 
+  const handleDelete = async(id)=>{
+   
+    // console.log('request is ',request);
+    await axios.delete(`${url}/orderFile/${id}`,{withCredentials:true}).then((resp)=>{
+        // console.log(resp.data);
+        if(resp.data.error) return setOpenError({open:true,message:`${resp.data.error}`})
+        const data = orderFileData.filter((or)=>or.id!==id)
+        setOrderFileData(data)
+        setOpenSuccess({open:true,message:`Successfully Updated`})
+    }).catch((error)=>{
+      if (error.response && error.response.data && error.response.data.error) {
+          setOpenError({open:true,message:`${error.response.data.error}`});
+        } else {
+          setOpenError({open:true,message:"An unknown error occurred"});
+        }
+  })
+  }
+
+
+
   return (
     <section className="contracts-section p-4 bg-white rounded-md shadow-md dark:bg-gray-700 dark:text-gray-300">
       <ErrorAlert
@@ -220,7 +248,7 @@ function OrderFileSection({ bid, project, users, setBids, setProject }) {
 
     {/* END OF REPORT MODAL */}
 
-      <TableContainer className="mb-4">
+    <TableContainer className="mb-4">
         <Table>
           <TableHeader>
             <TableRow>
@@ -228,7 +256,9 @@ function OrderFileSection({ bid, project, users, setBids, setProject }) {
               <TableCell>File</TableCell>
               <TableCell>Created By</TableCell>
               <TableCell>Approved By</TableCell>
-              <TableCell>status</TableCell>
+              <TableCell>Approve</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Delete</TableCell>
               
             </TableRow>
           </TableHeader>
@@ -259,6 +289,10 @@ function OrderFileSection({ bid, project, users, setBids, setProject }) {
                   </span>
                 </TableCell>
                 <TableCell>
+                  {authState.role==="admin"||authState.role==="manager"||authState.role==="designAdmin"?
+                  
+                  
+                  
                   <div className="flex items-center space-x-4 ml-4">
                   {pr?.approved?<Button
                         layout="link"
@@ -280,11 +314,48 @@ function OrderFileSection({ bid, project, users, setBids, setProject }) {
                       }}
                       >
                       <BsFillQuestionCircleFill className="w-5 h-5" aria-hidden="true" />
-                      </Button>}
+                      </Button>
+                      }
                       
                   
                   </div>
+                  :<div className="flex items-center space-x-4">
+                    <Badge type="danger">UnAuthorized</Badge>
+                    </div>
+                    }
                 </TableCell>
+                <TableCell>
+                <span className="text-sm">
+                    {pr?.approved?"Approved":"NotApproved"}
+                  </span>
+                </TableCell>
+                <TableCell>
+                {authState.role==="admin"||authState.role==="designAdmin"||authState.role==="manager"?
+                  <div className="flex items-center space-x-4">
+                    <Button 
+                     onClick={()=>handleDelete(pr.id)}
+                     layout="link"
+                     size="icon"
+                     aria-label="Delete"
+                     title="Delete"
+                     style={{color:'red'}}
+                     >
+                       <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <TrashIcon />
+
+                      </svg>
+                      
+                    </Button>
+                    </div>
+                    :<div className="flex items-center space-x-4">
+                    <Badge type="danger">UnAthorized</Badge>  
+                  </div>
+                  }
+                    </TableCell>
               </TableRow>
             ))}
           </TableBody>

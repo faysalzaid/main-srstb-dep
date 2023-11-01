@@ -37,33 +37,33 @@ routes = [{
         path: '/app/dashboard', // the url
         icon: 'HomeIcon', // the component being exported from icons/index.js
         name: 'Dashboard', // name that appear in Sidebar
-        roles: ['admin', 'finance', 'financeAdmin', 'design', 'client', 'roadquality', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'hr', 'manager', 'pRelation']
+        roles: ['admin', 'finance', 'financeAdmin', 'design', 'designAdmin', 'client', 'roadqualityAdmin', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'contract', 'hr', 'manager', 'pRelation']
     },
     {
         path: '/app/companies',
         icon: 'SunIcon',
         name: 'Companies',
-        roles: ['admin', 'finance', 'financeAdmin', 'design', 'roadquality', 'engineer', 'contractadmin', 'hr', 'manager', 'planning', 'planningAdmin']
+        roles: ['admin', 'finance', 'financeAdmin', 'design', 'designAdmin', 'roadquality', 'engineer', 'contractadmin', 'contract', 'hr', 'manager', 'planning', 'planningAdmin']
     },
 
     {
         path: '/app/bids',
         icon: 'FormsIcon',
         name: 'Bids',
-        roles: ['admin', 'finance', 'financeAdmin', 'engineer', 'manager', 'planning', 'planningAdmin']
+        roles: ['contractadmin', 'contract', 'admin', 'finance', 'financeAdmin', 'engineer', 'manager', 'planning', 'planningAdmin', 'designAdmin']
     },
 
     {
         path: '/app/users',
         icon: 'PeopleIcon',
         name: 'Users',
-        roles: ['admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin']
+        roles: ['admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin']
     },
     {
         path: '/app/charts',
         icon: 'ChartsIcon',
         name: 'Charts',
-        roles: ['admin', 'finance', 'financeAdmin', 'design', 'roadquality', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'hr', 'manager']
+        roles: ['admin', 'finance', 'financeAdmin', 'design', 'designAdmin', 'roadquality', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'contract', 'hr', 'manager']
     },
 
 
@@ -71,13 +71,30 @@ routes = [{
         path: '/app/chat',
         icon: 'ChatIcon',
         name: 'Chat',
-        roles: ['admin', 'finance', 'financeAdmin', 'design', 'client', 'roadquality', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'hr', 'manager', 'pRelation']
+        roles: ['admin', 'finance', 'financeAdmin', 'design', 'designAdmin', 'client', 'roadquality', 'planning', 'planningAdmin', 'engineer', 'contractadmin', 'contract', 'hr', 'manager', 'pRelation']
     },
     {
         path: '/app/pglist',
         icon: 'TablesIcon',
         name: 'Projects',
-        roles: ['admin', 'finance', 'financeAdmin', 'roadquality', 'engineer', 'manager', 'planning', 'planningAdmin']
+        roles: ['admin', 'finance', 'financeAdmin', 'roadquality', 'designAdmin', 'design', 'engineer', 'manager', 'planning', 'planningAdmin', 'contractadmin', 'contract']
+    },
+    {
+        // path: '/app/softProjects',
+        icon: 'FaRing',
+        name: 'SoftProjects',
+        roles: ['admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin'],
+        routes: [{
+            path: '/app/softProjects',
+            icon: 'FaAccusoft',
+            name: 'Training',
+            roles: ['admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin']
+        }, {
+            path: '/app/softItems',
+            icon: 'FaRegListAlt',
+            name: 'Items',
+            roles: ['admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin']
+        }, ]
     },
     {
         icon: 'FaRoad',
@@ -89,13 +106,13 @@ routes = [{
                 path: '/app/roads',
                 icon: 'FaBroadcastTower',
                 name: 'Roads',
-                roles: ['admin', 'roadquality']
+                roles: ['admin', 'roadquality', 'manager']
             },
             {
                 path: '/app/members',
                 icon: 'FaPhoenixFramework',
                 name: 'Maintainance',
-                roles: ['admin', 'roadquality']
+                roles: ['admin', 'roadquality', 'manager']
             },
 
 
@@ -107,27 +124,27 @@ routes = [{
         path: '/app/archives',
         icon: 'FaRegFileArchive',
         name: 'Archives',
-        roles: ['admin', 'design', 'engineer', 'pRelation']
+        roles: ['admin', 'engineer', 'archive', 'manager']
     },
 
     {
 
         icon: 'FaCircleNotch',
         name: 'Procurement',
-        roles: ['admin', 'design', 'engineer'],
+        roles: ['admin', 'contractadmin', 'contract'],
         routes: [
             // submenu
             {
                 path: '/app/procurement',
                 icon: 'FaRegLifeRing',
                 name: 'Procurements',
-                roles: ['admin', 'roadquality']
+                roles: ['admin', 'contractadmin', 'contract', 'contract']
             },
             {
                 path: '/app/procFile',
                 icon: 'FaFileSignature',
                 name: 'Pr.Files',
-                roles: ['admin', 'roadquality']
+                roles: ['admin', 'contractadmin', 'contract', 'contract']
             },
 
 
@@ -138,7 +155,7 @@ routes = [{
         path: '/app/requests',
         icon: 'CardsIcon',
         name: 'Letter Requests',
-        roles: ['admin', 'finance', 'financeAdmin', 'hr', 'planning', 'planningAdmin']
+        roles: ['admin', 'manager', 'finance', 'financeAdmin', 'hr', 'planning', 'planningAdmin', 'contractadmin']
     },
 
     // {
@@ -157,7 +174,7 @@ routes = [{
         path: '/app/invoice',
         icon: 'FaFileInvoiceDollar',
         name: 'Invoices',
-        roles: ['admin', 'finance', 'financeAdmin', ]
+        roles: ['admin', 'finance', 'financeAdmin', 'manager']
 
     },
     {
@@ -171,12 +188,12 @@ routes = [{
         path: '/app/contract',
         icon: 'FaFileContract',
         name: 'Contracts',
-        roles: ['admin', 'contractadmin']
+        roles: ['admin', 'contractadmin', 'contract']
     },
     {
         name: 'Reports',
         icon: 'FaReadme',
-        roles: ['admin', 'finance', 'financeAdmin', 'roadquality', 'planningAdmin'],
+        roles: ['admin', 'finance', 'financeAdmin', 'roadqualityAdmin', 'planningAdmin', 'contractadmin'],
         routes: [{
             path: '/app/reports/projects',
             icon: 'FaRoute',

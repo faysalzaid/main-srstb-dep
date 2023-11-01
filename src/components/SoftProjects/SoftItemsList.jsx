@@ -8,6 +8,7 @@ import ReactQuill from "react-quill";
 import "../../assets/css/requestPages.css";
 import "../../assets/css/quill.css";
 import "../../../node_modules/react-quill/dist/quill.snow.css";
+import "../../pages/employeeList.css"
 // import "../../../node_modules/react-quill"
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -29,7 +30,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
 import { Input, HelperText, Label, Select, Textarea } from "@windmill/react-ui";
 import { url } from "../../config/urlConfig";
 import * as Yup from "yup";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+
 import { useContext } from "react";
 import { AuthContext } from "../../hooks/authContext";
 import useAuth from "hooks/useAuth";
@@ -39,7 +40,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 
 
 
-function BlogList(props) {
+function SoftItemsList(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function openModal() {
@@ -51,33 +52,32 @@ function BlogList(props) {
   }
 
   // const [companyData,setCompanyData] = useState([])
-  const [blogForm, setBlogForm] = useState({
-    title: "",
-    description: "",
-    date: "",
-    user: "",
-    BlogCategoryId: "",
-    image: "",
+  const [projectForm, setProjectForm] = useState({
+    name:"",
+    total:"",
+    quantity:"",
+    items:""
   });
+
 
   const [searchResult, setSearchResult] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [fetchedResult, setFetchedResult] = useState([]);
   const [showModal, setShowModal] = useState({show:false,id:""});
   const {authState,settings} = useAuth(AuthContext)
-  const [blogData,setBlogData] = useState([])
+  const [projectData,setProjectData] = useState([])
   const [category,setCatogory] = useState([])
 
 
   useEffect(() => {
     const getData =async()=>{
-      await axios.get(`${url}/blog`,{withCredentials: true}).then((resp) => {
+      await axios.get(`${url}/softProjectItem`,{withCredentials: true}).then((resp) => {
         if(resp.data.error){
-          console.log(resp.data.error);
+        //   console.log(resp.data.error);
           setOpenError({open:true,message:`${resp.data.error}`})
         }else{
          
-          setBlogData(resp.data);
+          setProjectData(resp.data);
   
         }
       });
@@ -104,33 +104,26 @@ function BlogList(props) {
   const handleSubmit = async (e) => {
     
     e.preventDefault()
-    if(blogForm.image==="" || blogForm.image ===undefined) return setOpenError({open:true,message:"Please Provide Image"})
-    const formData = new FormData();
-    formData.append("title", blogForm.title);
-    formData.append("description", blogForm.description);
-    formData.append("user", authState.username);
-    formData.append("image", blogForm.image);
-    formData.append("BlogCategoryId",blogForm.BlogCategoryId)
-
-    // console.log(formData);
-    await axios.post(`${url}/blog`, formData,{withCredentials:true}).then((resp) => {
+    if(projectForm.total==="" ||projectForm.quantity==="" || projectForm.name ===undefined) return setOpenError({open:true,message:"Please Provide Trainers or Trainees List"})
+    // console.log(projectForm);
+    await axios.post(`${url}/softProjectItem`, projectForm,{withCredentials:true}).then((resp) => {
       if (resp.data.error) {
         setOpenError({open:true,message:`${resp.data.error}`})
       } else {
-        setBlogData([...blogData, resp.data]);
+        setProjectData([...projectData, resp.data]);
         closeModal();
         setOpenSuccess({open:true,message:"Successfully Added"})
       }
     });
   };
 
-  const deleteBlog = async(ids) => {
-    await axios.delete(`${url}/blog/${ids}`,{withCredentials:true}).then((resp) => {
+  const handleDelete = async(ids) => {
+    await axios.delete(`${url}/softProjectItem/${ids}`,{withCredentials:true}).then((resp) => {
       if (resp.data.error) {
-        setOpenError({open:true,message:`${resp.data.error}`})
+        return setOpenError({open:true,message:`${resp.data.error}`})
       }
-      const newdata = blogData.filter((d) => d.id !== ids);
-      setBlogData(newdata);
+      const newdata = projectData.filter((d) => d.id !== ids);
+      setProjectData(newdata);
       closeModal();
       setShowModal({show:false,id:""})
       setOpenSuccess({open:true,message:"Successfully Deleted"})
@@ -138,13 +131,13 @@ function BlogList(props) {
   };
 
   useEffect(() => {
-    setFetchedResult(searchTerm.length < 1 ? blogData : searchResult);
-  }, [blogData, searchTerm]);
+    setFetchedResult(searchTerm.length < 1 ? projectData : searchResult);
+  }, [projectData, searchTerm]);
 
   const searchHandler = async (search) => {
     setSearchTerm(search);
     if (search !== 0) {
-      const newProjectData = blogData.filter((prj) => {
+      const newProjectData = projectData.filter((prj) => {
         return Object.values(prj)
           .join(" ")
           .toLowerCase()
@@ -153,7 +146,7 @@ function BlogList(props) {
       // console.log(newProjectData);
       setSearchResult(newProjectData);
     } else {
-      setSearchResult(blogData);
+      setSearchResult(projectData);
     }
   };
 
@@ -182,10 +175,34 @@ const handleCloseError = (event, reason) => {
 
 
 
-const handleChange = (e) => {
-  setBlogForm({...blogForm,description:e})
+const [indexNumber, setIndexNumber] = useState(0);
+const [step, setStep] = useState(1);
+const [progress, setProgress] = useState(0);
+
+const ShowNext = () => {
+  setIndexNumber((indexNumber) => indexNumber + 100);
+  setStep((setp) => setp + 1);
+  setProgress((progress) => progress + 33.3);
+
+};
+const ShowPrev = () => {
+  setIndexNumber((indexNumber) => indexNumber - 100);
+  setStep((step) => step - 1);
+  setProgress((progress) => progress - 33.3);
+};
+
+
+
+
+const handleTrainees = (e) => {
+  setProjectForm({...projectForm,trainees:e})
   // console.log('This is e',e);
 };
+
+const handleItems = (e) => {
+    setProjectForm({...projectForm,items:e})
+    // console.log('This is e',e);
+  };
 
   return (
     <>
@@ -202,12 +219,12 @@ const handleChange = (e) => {
         horizontal="right"
       />
       
-    <TitleChange name={`Users | ${settings.name}`} />
+    <TitleChange name={`SoftProjects | ${settings.name}`} />
       <link
         rel="stylesheet"
         href="https://unpkg.com/flowbite@1.4.4/dist/flowbite.min.css"
       />
-      <PageTitle>List of Blog</PageTitle>
+      <PageTitle>List of SoftProjects | Items</PageTitle>
          {/* Delete MOdal section  */}
          {showModal.show ? (
         <>
@@ -249,7 +266,7 @@ const handleChange = (e) => {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => deleteBlog(showModal.id)}
+                    onClick={() => handleDelete(showModal.id)}
                     style={{backgroundColor:'darkred'}}
                   >
                     Continue Deleting
@@ -296,7 +313,7 @@ const handleChange = (e) => {
             value={searchTerm}
             onChange={(e) => searchHandler(e.target.value)}
             className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 
-            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            // dark:border-gray-600 dark://placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Search By Name, Role, Email..."
             required
           />
@@ -307,98 +324,176 @@ const handleChange = (e) => {
       <p></p>
       {authState.role==='admin'||authState.role==="manager"||authState.role==="hr"||authState.role==="pRelation" ?
       <div>
-        <Button size="small" onClick={openModal}>Create Blog</Button>
+        <Button size="small" onClick={openModal}>Create SoftProject</Button>
       </div>
       :<p>Read Only</p>}
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-      <ModalHeader>Create Blog</ModalHeader>
-      <ModalBody>
-      <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4">
-          
-          <Label>
-            <span>Title</span>
-            <Input
-            //   type="date"
-              className="mt-1"
-            //   value={timesheetForm.date}
-              name="title"
-              onChange={(e)=>setBlogForm({...blogForm,title:e.target.value})}
-              required
-            />
-          </Label>
-
-
-   
-
-
-          <Label>
-            <span>Category</span>
-            <Select
-              className="mt-1"
-              name="BlogCategoryId"
-              // value={formValues.ProjectId}
-              onChange={(e)=>setBlogForm({...blogForm,BlogCategoryId:e.target.value})}
-              required
+        <ModalHeader>Insert Project Info</ModalHeader>
+        <ModalBody>
+          <div className=" form_container w-full ">
+            <section className=" progress_bar">
+              <section
+                className="progress"
+                style={{ width: progress + "%" }}
+              ></section>
+              <div
+                className="progress_step bg-white dark:bg-gray-700 text-black dark:text-white border border-gray-400 "
+                style={
+                  step >= 1
+                    ? { background: "#7e3af2", color: "white" }
+                    : { background: "", color: "" }
+                }
+                data-title="Step 1"
+              ></div>
+              <div
+                className="progress_step bg-white dark:bg-gray-700 text-black dark:text-white border border-gray-400 "
+                style={
+                  step >= 2
+                    ? { background: "#7e3af2", color: "white" }
+                    : { background: "", color: "" }
+                }
+                data-title="Step 2"
+              ></div>
+              <div
+                className="progress_step bg-white dark:bg-gray-700 text-black dark:text-white border border-gray-400 "
+                style={
+                  step >= 3
+                    ? { background: "#7e3af2", color: "white" }
+                    : { background: "", color: "" }
+                }
+                data-title="Step 3"
+              ></div>
+         
+            </section>
+            <form
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+              className=" insert_person_form"
+              style={{ transform: "translateX(-" + indexNumber + "%)" }}
             >
-              <option value="" >Select Category</option>
-              {category.map((pr,i)=>(
-                <option key={i} value={pr.id}>{pr.name}</option>
-              ))}
-              
-              
-            </Select>
-          </Label>
+              {/* section 1 */}
+              <section className=" form_section">
+                <div className=" grid grid-cols-1 gap-2">
+                  <Label>
+                    <span>Name <span className="text-red-600 text-1xl">*</span></span>
+                    <Input
+                      type="text"
+                      className="mt-1"
+                      name="name"
+                    //   placeholder="Empl Name"
+                      autoComplete="off"
+                      onChange={(e) =>
+                        setProjectForm({ ...projectForm, name: e.target.value })
+                      }
+                      required
+                    />
+                    
+                  </Label>
+
+                  <Label>
+                    <span>Quantity <span className="text-red-600 text-1xl">*</span></span>
+                    <Input
+                      type="number"
+                      className="mt-1"
+                      name="email"
+                    //   placeholder="Empl Email"
+                      autoComplete="off"
+                      onChange={(e) =>
+                        setProjectForm({ ...projectForm, quantity: e.target.value })
+                      }
+                      required
+                    />
+                  </Label>
+
+                  <Label>
+                    <span>Total <span className="text-red-600 text-1xl">*</span></span>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      className="mt-1"
+                      name="phone"
+                    //   placeholder="Empl Phone"
+                      autoComplete="off"
+                      onChange={(e) =>
+                        setProjectForm({ ...projectForm, total: e.target.value })
+                      }
+                      required
+                    />
+                  </Label>
+
+
+                </div>
+
+                <div className=" flex justify-end gap-2">
+                  <Button
+                    type="button"
+                    className="form_button dark:text-white text-gray-100"
+                    onClick={ShowNext}
+                  >
+                    Next
+                  </Button>
+                </div>
+                
+              </section>
+
+              {/* section 2 */}
+              <section className=" form_section">
+                <div className=" grid grid-cols-1 gap-2">
+                  <Label className="mt-1">
+                    <span>Items <span className="text-red-600 text-1xl">*</span></span>
+                    
+                        <ReactQuill
+                        placeholder="List of Items Here...."
+                        className=" mb-6"
+                        modules={SoftItemsList.modules}
+                        // value={projectForm.items}
+                        onChange={handleItems}
+                       
+                        />
+                  </Label>
+
+                  
+                </div>
+
+                <div className=" flex justify-end gap-2">
+                  <Button
+                    type="button"
+                    className=" form_button dark:text-white text-gray-100"
+                    onClick={ShowPrev}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    type="button"
+                    className=" form_button dark:text-white text-gray-100"
+                    onClick={ShowNext}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </section>
 
 
 
-          <label htmlFor="file" className="w-full p-4 rounded-lg shadow-lg dark:text-white cursor-pointer text-center bg-gradient-to-r from-purple-400 to-pink-500 text-black hover:from-pink-500 hover:to-purple-400 transition duration-300">
-                <FaCloudUploadAlt className="w-8 h-8 mx-auto mb-2" />
-                <span className="text-lg font-semibold">Upload File</span>
-              </label>
-              <input
-                type="file"
-                id="file"
-                className="hidden"
-                name="attach"
-                // required
-                onChange={(e)=>setBlogForm({...blogForm,image:e.target.files[0]})}
-              />
-              
-        </div>
-
-        <ReactQuill
-          placeholder="Write Something Here...."
-          className=" mb-6"
-          modules={BlogList.modules}
-          value={blogForm.description}
-          onChange={handleChange}
-          />
-        <Button className="mt-6 lg:block" type="submit">Submit</Button>
-    
-          
-      
-        </form>
-      </ModalBody>
-      <ModalFooter>
-      <div className="hidden sm:block">
-            <Button layout="outline" onClick={closeModal}>
-              Cancel
-            </Button>
-        </div>
-        <div className="block w-full sm:hidden">
-            <Button block size="large" layout="outline" onClick={closeModal}>
-              Cancel
-            </Button>
+              {/* section 4 */}
+              <section className=" form_section">
+                <div className=" flex justify-end gap-2">
+                  <Button
+                    type="button"
+                    className=" form_button dark:text-white text-gray-100"
+                    onClick={ShowPrev}
+                  >
+                    Previous
+                  </Button>
+                  <Button type="submit" className=" form_button dark:text-white text-gray-100">
+                    Save
+                  </Button>
+                </div>
+              </section>
+            </form>
           </div>
-
-          {/* <div className="block w-full sm:hidden">
-            <Button block size="large">
-              Accept
-            </Button>
-          </div> */}
-      </ModalFooter>
-    </Modal>
+        </ModalBody>
+      </Modal>
 
     
 
@@ -406,54 +501,60 @@ const handleChange = (e) => {
         <Table>
           <TableHeader>
             <tr>
-              <TableCell>Title</TableCell>
-              <TableCell>Image</TableCell>
-              <TableCell>User</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Total</TableCell>
               <TableCell>Actions</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
-            {fetchedResult.map((blog, i) => (
+            {fetchedResult.map((pr, i) => (
               <TableRow key={i}>
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{blog.title}</p>
+                      <p className="font-semibold">{pr.name}</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <img style={{ width: 30 }} src={blog.image} />
+                    <p className="font-semibold">{pr.quantity}</p>
                     </div>
                   </div>
                 </TableCell>
+              
+                
+
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{blog.user}</p>
+                      <Badge className="font-semibold">{pr.status}</Badge>
                     </div>
                   </div>
                 </TableCell>
+
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{blog.date}</p>
+                      <p className="font-semibold">ETB-{parseFloat(pr.total).toLocaleString()}</p>
                     </div>
                   </div>
                 </TableCell>
 
                 <TableCell>
                   <div className="flex items-center space-x-4">
-                    <Link to={{ pathname: `/app/bloglist/${blog.id}` }}>
+                    <Link to={{ pathname: `/app/softItems/${pr.id}` }}>
                       <Button layout="link" size="icon" aria-label="Edit">
                         <EditIcon className="w-5 h-5" aria-hidden="true" />
                       </Button>
                     </Link>
+                      {authState.role==="planningAdmin"||authState.role==="admin"||authState.role==="financeAdmin"||authState.role==="manager"?
+                      
                     <Button
-                      onClick={() => setShowModal({show:true,id:blog.id})}
+                      onClick={() => setShowModal({show:true,id:pr.id})}
                       style={{ color: "red" }}
                       layout="link"
                       size="icon"
@@ -461,6 +562,7 @@ const handleChange = (e) => {
                     >
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
+                      :<Badge type="danger">UnAthorized</Badge>}
                   </div>
                 </TableCell>
               </TableRow>
@@ -468,20 +570,13 @@ const handleChange = (e) => {
           </TableBody>
         </Table>
         <TableFooter>
-          {/* <Pagination
-              // totalResults={totalResults}
-              // resultsPerPage={resultsPerPage}
-              // onChange={onPageChangeTable2}
-              // label="Table navigation"
-            /> */}
         </TableFooter>
       </TableContainer>
     </>
   );
 }
 
-
-BlogList.modules = {
+SoftItemsList.modules = {
   toolbar: [
     [{ header: ["3", false] }, { header: 1 }, { header: 2 }],
     ["bold", "italic", "underline", "strike"],
@@ -499,4 +594,8 @@ BlogList.modules = {
 };
 
 
-export default BlogList;
+
+
+
+
+export default SoftItemsList;

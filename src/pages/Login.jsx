@@ -57,7 +57,7 @@ function Login(props) {
 const onSubmit = async(data)=>{
   try {
     await axios.post(`${url}/login`,data,{ withCredentials: true }).then((response)=>{
-      console.log('resp.data',response.data);
+      // console.log('resp.data',response.data);
       if(response.data.error){
           setOpenError({open:true,message:`${response.data.error}`})  
          

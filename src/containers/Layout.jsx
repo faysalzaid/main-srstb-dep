@@ -53,6 +53,9 @@ function Layout() {
     else if(authState.role=='design'){
       const n = newRoute.filter((r)=>r.roles?.find((r)=>r==='design'))  
       setNewRoleRoutes(n)
+    } else if(authState.role=='designAdmin'){
+      const n = newRoute.filter((r)=>r.roles?.find((r)=>r==='designAdmin'))  
+      setNewRoleRoutes(n)
     }
     else if(authState.role=='roadquality'){
       const n = newRoute.filter((r)=>r.roles?.find((r)=>r==='roadquality'))  
@@ -60,6 +63,9 @@ function Layout() {
     }
     else if(authState.role=='contractadmin'){
       const n = newRoute.filter((r)=>r.roles?.find((r)=>r==='contractadmin'))  
+      setNewRoleRoutes(n)
+    } else if(authState.role=='contract'){
+      const n = newRoute.filter((r)=>r.roles?.find((r)=>r==='contract'))  
       setNewRoleRoutes(n)
     }
     else if(authState.role=='hr'){

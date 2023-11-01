@@ -4,7 +4,6 @@ import PageTitle from "../components/Typography/PageTitle";
 import SectionTitle from "../components/Typography/SectionTitle";
 import axios from "axios";
 import { ErrorAlert, SuccessAlert } from "components/Alert";
-import "./employeeList.css";
 import { EmplFileDownload } from "../config/urlConfig";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -20,6 +19,7 @@ import {
   Button,
   Pagination,
 } from "@windmill/react-ui";
+import "./employeeList.css";
 import { EditIcon, EyeIconOne, TrashIcon } from "../icons";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
 import { Input, HelperText, Label, Select, Textarea } from "@windmill/react-ui";

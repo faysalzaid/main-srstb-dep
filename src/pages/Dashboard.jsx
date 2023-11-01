@@ -42,6 +42,7 @@ import Line_Chart from "global/recharts/Line_Chart";
 import Area_Chart from "global/recharts/Area_Chart";
 
 import { Button } from "@mui/material";
+import { FaDownload } from "react-icons/fa";
 // import useGrapAuth from "hooks/useRefresh";
 
 
@@ -53,6 +54,15 @@ function Dashboard(props) {
   const [comments,setComments] = useState([])
   const [budgets,setBudgets] = useState([])
   const [tracks,setTracks] = useState([])
+  const [dFiles,setDFiles] = useState([])
+  const [vFiles,setVFiles] = useState([])
+  const [oFiles,setOFiles] = useState([])
+  const [pendingItem,setPendingItem] =useState([])
+  const [checkedItem,setCheckedItem] =useState([])
+  const [approvedItem,setApprovedItem] =useState([])
+  const [pendingSoft,setPendingSoft] =useState([])
+  const [checkedSoft,setChecedSoft] = useState([])
+  const [approvedSoft,setApprovedSoft] = useState([])
   const [notApprovedOnes,setNotApprovedOnes] = useState([])
   const [countsData, setCountsData] = useState({
     projectCount: "",
@@ -130,6 +140,43 @@ function Dashboard(props) {
         });
     };
 
+    const getDesignFiles = async () => {
+      await axios
+        .get(`${url}/designFile`, { withCredentials: true })
+        .then((resp) => {
+          // console.log(resp.data);
+          if(resp.data.error) return
+          const data = resp.data.filter((dt)=>dt.approved===false);
+          // console.log(data);
+          setDFiles(data)
+        });
+    };
+
+    const getVariationFiles = async () => {
+      await axios
+        .get(`${url}/variationFile`, { withCredentials: true })
+        .then((resp) => {
+          // console.log(resp.data);
+          if(resp.data.error) return
+          const data = resp.data.filter((dt)=>dt.approved===false);
+          // console.log(data);
+          setVFiles(data)
+        });
+    };
+
+
+    const getOrderFiles = async () => {
+      await axios
+        .get(`${url}/orderFile`, { withCredentials: true })
+        .then((resp) => {
+          // console.log(resp.data);
+          if(resp.data.error) return
+          const data = resp.data.filter((dt)=>dt.approved===false);
+          // console.log(data);
+          setOFiles(data)
+        });
+    };
+
     const getTracks = async () => {
       await axios
         .get(`${url}/budget/tracks`, { withCredentials: true })
@@ -159,14 +206,53 @@ function Dashboard(props) {
     }
 
 
+    const getSoftProjects = async()=>{
+      await axios.get(`${url}/softProject`,{withCredentials:true}).then((resp)=>{
+          if(resp.data.error){
+              return
+          }else{
+            const p = resp.data.filter((sp)=>sp.status==="pending")
+            const c = resp.data.filter((ch)=>ch.status==="checked")
+            const a = resp.data.filter((ap)=>ap.status==="approved")
+            setPendingSoft(p)
+            setChecedSoft(c)
+            setApprovedSoft(a)
+            
+          }
+      })
+    }
 
-   
+
+
+    const getSoftItems = async()=>{
+      await axios.get(`${url}/softProjectItem`,{withCredentials:true}).then((resp)=>{
+          if(resp.data.error){
+              return
+          }else{
+            const p = resp.data.filter((sp)=>sp.status==="pending")
+            const c = resp.data.filter((ch)=>ch.status==="checked")
+            const a = resp.data.filter((ap)=>ap.status==="approved")
+            setPendingItem(p)
+            setCheckedItem(c)
+            setApprovedItem(a)
+            
+          }
+      })
+    }
+
+
+
+    getSoftItems()
     getProcurements()
     getCounts();
     getData();
     getComments()
     getBudgets()
     getTracks()
+    getDesignFiles()
+    getVariationFiles()
+    getOrderFiles()
+    getSoftProjects()
 
     // console.log('favicon');
   }, []);
@@ -254,6 +340,459 @@ function Dashboard(props) {
 
             {/* end of calendar section */}
           </TableContainer>
+
+          {authState.role==="manager"?
+          <>
+          <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Checked Soft-Projects(Training) That Need Approval.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {checkedSoft?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Name</TableCell>
+                <TableCell>No.Trainers</TableCell>
+                <TableCell>No.Trainees</TableCell>
+                <TableCell>Days</TableCell>
+                <TableCell>Refreshment</TableCell>
+                <TableCell>Total</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {checkedSoft?.map((prc, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{prc?.name}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.trainersNo}</span>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm">{prc?.traineesNo}</span>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.days}</span>
+                  </TableCell>
+
+                    
+                  <TableCell>
+                    <span className="text-sm">{prc?.refreshment}</span>
+                  </TableCell>
+
+                    
+                  <TableCell>
+                    <span className="text-sm">ETB-{parseFloat(prc?.total).toLocaleString()}</span>
+                  </TableCell>
+
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/softProjects/${prc?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4">No Projects Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+            
+            
+            {/* items */}
+            <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Checked Soft-Projects(Items) That Need Approval.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {checkedItem?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Name</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Total</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {checkedItem?.map((prc, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{prc?.name}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.quantity}</span>
+                  </TableCell>
+
+                    
+                  <TableCell>
+                    <span className="text-sm">ETB-{parseFloat(prc?.total).toLocaleString()}</span>
+                  </TableCell>
+
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/softItems/${prc?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4">No Projects Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+            {/* end of items */}
+            
+            
+            </>:""}
+
+
+          {authState.role==="planningAdmin"?
+          <>
+          <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Pending Soft-Projects(Training) That Need Checking.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {pendingSoft?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Name</TableCell>
+                <TableCell>No.Trainers</TableCell>
+                <TableCell>No.Trainees</TableCell>
+                <TableCell>Days</TableCell>
+                <TableCell>Refreshment</TableCell>
+                <TableCell>Total</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {pendingSoft?.map((prc, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{prc?.name}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.trainersNo}</span>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm">{prc?.traineesNo}</span>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.days}</span>
+                  </TableCell>
+
+                    
+                  <TableCell>
+                    <span className="text-sm">{prc?.refreshment}</span>
+                  </TableCell>
+
+                    
+                  <TableCell>
+                    <span className="text-sm">ETB-{parseFloat(prc?.total).toLocaleString()}</span>
+                  </TableCell>
+
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/softProjects/${prc?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4">No Projects Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+            
+
+             {/* items */}
+             <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Pending Soft-Projects(Items) That Need Checking.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {pendingItem?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Name</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Total</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {pendingItem?.map((prc, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{prc?.name}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.quantity}</span>
+                  </TableCell>
+
+                    
+                  <TableCell>
+                    <span className="text-sm">ETB-{parseFloat(prc?.total).toLocaleString()}</span>
+                  </TableCell>
+
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/softItems/${prc?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4">No Projects Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+            {/* end of items */}
+            
+            
+            
+            </>:""}
+
+
+            {authState.role==="financeAdmin"?
+            <>
+          <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Approved Soft-Projects(Training) That Need To Be Done.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {approvedSoft?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Name</TableCell>
+                <TableCell>No.Trainers</TableCell>
+                <TableCell>No.Trainees</TableCell>
+                <TableCell>Days</TableCell>
+                <TableCell>Refreshment</TableCell>
+                <TableCell>Total</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {approvedSoft?.map((prc, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{prc?.name}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.trainersNo}</span>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm">{prc?.traineesNo}</span>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.days}</span>
+                  </TableCell>
+
+                    
+                  <TableCell>
+                    <span className="text-sm">{prc?.refreshment}</span>
+                  </TableCell>
+
+                    
+                  <TableCell>
+                    <span className="text-sm">ETB-{parseFloat(prc?.total).toLocaleString()}</span>
+                  </TableCell>
+
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/softProjects/${prc?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4">No Projects Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+            
+            
+
+             {/* items */}
+             <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Approved Soft-Projects(Items) That Need To Be Done.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {approvedItem?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Name</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Total</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {approvedItem?.map((prc, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{prc?.name}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.quantity}</span>
+                  </TableCell>
+
+                    
+                  <TableCell>
+                    <span className="text-sm">ETB-{parseFloat(prc?.total).toLocaleString()}</span>
+                  </TableCell>
+
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/softItems/${prc?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4">No Projects Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+            {/* end of items */}
+            
+            
+            
+            </>:""}
+
 
 
           {authState.role==="planningAdmin"||authState.role==="planning"?
@@ -555,6 +1094,239 @@ function Dashboard(props) {
             </>:""
           }
 
+
+            {authState.role==="design"||authState.role==="designAdmin"? 
+            <>         
+            <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Pending Design Files.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {dFiles?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Date</TableCell>
+                <TableCell>Project</TableCell>
+                <TableCell>File</TableCell>
+                <TableCell>CreatedBy</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {dFiles?.map((prc, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{prc?.date}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.Project?.name}</span>
+                  </TableCell>
+                  <TableCell>
+                  <p className="text-sm font-semibold">
+                    <a href={`${prc?.file}`} target='_blank'>
+                     <FaDownload className=''/>
+                  </a>
+                </p>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.createdBy}</span>
+                  </TableCell>
+
+                  <TableCell>
+                    <span className="text-sm">Not Approved</span>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/pglist/${prc?.Project?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4 dark:text-white">No Pending Files Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+
+
+            <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Pending Variation Files.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {vFiles?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Date</TableCell>
+                <TableCell>Project</TableCell>
+                <TableCell>File</TableCell>
+                <TableCell>CreatedBy</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {vFiles?.map((prc, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{prc?.date}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.Project?.name}</span>
+                  </TableCell>
+                  <TableCell>
+                  <p className="text-sm font-semibold">
+                    <a href={`${prc?.file}`} target='_blank'>
+                     <FaDownload className=''/>
+                  </a>
+                </p>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.createdBy}</span>
+                  </TableCell>
+
+                  <TableCell>
+                    <span className="text-sm">Not Approved</span>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/pglist/${prc?.Project?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4 dark:text-white">No Pending Files Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+
+
+
+            <div className=" p-4 pb-0 bg-white rounded-lg shadow-xs dark:bg-gray-800 overflow-scroll">
+              <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+              Pending Order Files.
+              </p>
+             
+              <TableContainer className="mb-8">
+              {oFiles?.length>0?
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>Date</TableCell>
+                <TableCell>Project</TableCell>
+                <TableCell>File</TableCell>
+                <TableCell>CreatedBy</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Actions</TableCell>
+              </tr>
+            </TableHeader>
+          
+            <TableBody>
+            {oFiles?.map((prc, i) => (  
+                <TableRow key={i} >
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      
+                      <div>
+                        <p className="font-semibold">{prc?.date}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.Project?.name}</span>
+                  </TableCell>
+                  <TableCell>
+                  <p className="text-sm font-semibold">
+                    <a href={`${prc?.file}`} target='_blank'>
+                     <FaDownload className=''/>
+                  </a>
+                </p>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className="text-sm">{prc?.createdBy}</span>
+                  </TableCell>
+
+                  <TableCell>
+                    <span className="text-sm">Not Approved</span>
+                  </TableCell>
+                  
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-4">
+                      <Link to={`/app/pglist/${prc?.Project?.id}`}>
+                      <Button layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      </Link>
+                    
+                    </div>
+                  </TableCell>
+                </TableRow>
+          ))}
+            </TableBody>
+              
+                
+          </Table>
+             :<span className="text-center mb-4 mt-4 dark:text-white">No Pending Files Available</span>}
+          <TableFooter>
+          </TableFooter>
+        </TableContainer>
+
+            </div>
+
+
+            </>:""}
 
 
 

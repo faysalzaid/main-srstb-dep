@@ -49,24 +49,23 @@ useEffect(()=>{
       })
 
           if(!userData||userData?.state!==true){
-            if (history.location.pathname !== '/login') {
-              // history.push('/login');
-            }
+            if (history.location.pathname.startsWith('/app')) {
+              history.push('/login');
+            }            
             }else if(userData&&userData.state===true){
               setAuthState({ id:userData?.id,username:userData?.username, email:userData?.email,image:userData?.image, role:userData?.role,state:true, })
-              if(history.length>0){
+              if(history.location.pathname.startsWith('/login')){
                 // console.log('hello')
                   // console.log(props.history);
-                  if(history.location.pathname==='/login'){
-                    history.goBack()
-                  }else{
-                    return
-                  }
-                 
+                  // if(history.location.pathname==='/login'){
+                    history.push('/app/dashboard')
+                  // }else{
+                  //   return
+                  // }
+
                 //  console.log('runned',userData?.state);
               }
             }
-
 
         }
 
@@ -85,10 +84,11 @@ useEffect(()=>{
             const resp = await axios.post(`${url}/login/refreshToken`, { id: userData?.id });
             if(resp.data.error){
               // console.log('error',resp.data);
-              // console.log('userid',userData?.id);
-              // localStorage.setItem('User', "");
+              // console.log('userid',userData?.state);
+              // localStorage.removeItem('User');
               // props.history.push('/login')
               return
+              
             }
             const data = resp.data;
             // console.log('respdata',resp.data);
@@ -108,8 +108,8 @@ useEffect(()=>{
   
         } catch (error) {
             // setAuthState({ id: '', username: '', email: '', image: '', role: '', state: false });
-            // localStorage.setItem('User', "");
-            console.log('problem',error);
+            localStorage.setItem('User', "");
+            // console.log('problem',error);
             history.push('/login')
         }
         },1*60*1000); // 1 minutes (in milliseconds)

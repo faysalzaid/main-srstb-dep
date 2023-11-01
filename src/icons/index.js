@@ -58,7 +58,10 @@ import {
     FaBroadcastTower,
     FaPhoenixFramework,
     FaFileSignature,
-    FaRegLifeRing
+    FaRegLifeRing,
+    FaAccusoft,
+    FaRing,
+    FaRegListAlt
 } from 'react-icons/fa';
 import { BsCapsulePill } from 'react-icons/bs';
 
@@ -122,6 +125,9 @@ export {
     FaBroadcastTower,
     FaPhoenixFramework,
     FaFileSignature,
-    FaRegLifeRing
+    FaRegLifeRing,
+    FaAccusoft,
+    FaRing,
+    FaRegListAlt
 
 }
