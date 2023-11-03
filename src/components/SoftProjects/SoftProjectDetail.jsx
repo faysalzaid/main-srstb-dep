@@ -449,10 +449,10 @@ function closeDone(){
       <p></p>
       {authState.role==='admin'||authState.role==="manager"||authState.role==="financeAdmin"||authState.role==="planningAdmin" ?
       <div>
-         {projectData.status!=="done"?<Button size="small" onClick={openModal}>Update SoftProject</Button>:"This project is finished"}
+        {projectData.status==="done"?"This project is finished":<Button size="small" onClick={openModal}>Update SoftProject</Button>}
         
       </div>
-      :<p>Read Only</p>}
+   :<p>ReadOnly</p>}
         <Modal isOpen={isModalOpen} onClose={closeModal}>
         <ModalHeader>Update Project Info</ModalHeader>
         <ModalBody>
