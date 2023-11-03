@@ -442,12 +442,12 @@ function closeDone(){
       {/* End of search List */}
 
       <p></p>
-      {authState.role==='admin'||authState.role==="manager"||authState.role==="financeAdmin"||authState.role==="planningAdmin" ?
+      {authState.role==='admin'||authState.role==="manager"||authState.role==="financeAdmin"||authState.role==="planningAdmin" &&
       <div>
         {projectData.status!=="done"&&<Button size="small" onClick={openModal}>Update SoftProject</Button>}
         
       </div>
-      :<p>Read Only</p>}
+   }
         <Modal isOpen={isModalOpen} onClose={closeModal}>
         <ModalHeader>Update Project Info</ModalHeader>
         <ModalBody>
