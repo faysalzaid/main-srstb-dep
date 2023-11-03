@@ -83,17 +83,17 @@ routes = [{
         // path: '/app/softProjects',
         icon: 'FaRing',
         name: 'SoftProjects',
-        roles: ['admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin'],
+        roles: ['admin', 'financeAdmin', 'manager', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin'],
         routes: [{
             path: '/app/softProjects',
             icon: 'FaAccusoft',
             name: 'Training',
-            roles: ['admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin']
+            roles: ['admin', 'financeAdmin', 'manager', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin']
         }, {
             path: '/app/softItems',
             icon: 'FaRegListAlt',
             name: 'Items',
-            roles: ['admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin']
+            roles: ['admin', 'financeAdmin', 'manager', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin']
         }, ]
     },
     {

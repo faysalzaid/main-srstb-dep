@@ -326,8 +326,8 @@ const handleTrainers = (e) => {
       </div>
       {/* End of search List */}
 
-      <p></p>
-      {authState.role==='admin'||authState.role==="manager"||authState.role==="hr"||authState.role==="pRelation" ?
+      <p></p> //'admin', 'financeAdmin', 'manager', 'hr', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin'
+      {authState.role==='admin'||authState.role==="manager"||authState.role==="designAdmin"||authState.role==="planningAdmin"||authState.role==="contractadmin"||authState.role==="roadqualityAdmin" ?
       <div>
         <Button size="small" onClick={openModal}>Create SoftProject</Button>
       </div>

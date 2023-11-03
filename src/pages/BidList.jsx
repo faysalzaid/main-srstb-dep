@@ -281,7 +281,7 @@ const openDelete = (id)=>{
         {/* End of search List */}
         
         <div>
-        {authState.role==="admin"||authState.role==="engineer"||authState.role==="manager" ?
+        {authState.role==="admin"||authState.role==="contractAdmin"||authState.role==="manager"||authState.role==="contract" ?
           <Button className="custom-button" style={{background:""}} size="small"  onClick={openModal} >Add new Bid</Button>
           :<p>Read Only</p>}
         </div>

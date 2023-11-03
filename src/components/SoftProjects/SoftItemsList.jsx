@@ -322,7 +322,7 @@ const handleItems = (e) => {
       {/* End of search List */}
 
       <p></p>
-      {authState.role==='admin'||authState.role==="manager"||authState.role==="hr"||authState.role==="pRelation" ?
+      {authState.role==='admin'||authState.role==="manager"||authState.role==="designAdmin"||authState.role==="planningAdmin"||authState.role==="contractadmin"||authState.role==="roadqualityAdmin"?
       <div>
         <Button size="small" onClick={openModal}>Create SoftProject</Button>
       </div>

@@ -354,7 +354,7 @@ function BidDetail(props) {
             {/* End of Evaluation Modal */}
 
 
-            {authState.role==="admin"||authState.role==="engineer"||authState.role==="manager" ?
+            {authState.role==="admin"||authState.role==="contractAdmin"||authState.role=="contract"||authState.role==="manager" ?
         <div className=''>
         
           <Button onClick={openModal}>Edit Bid</Button>
