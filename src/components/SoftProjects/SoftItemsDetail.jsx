@@ -444,7 +444,7 @@ function closeDone(){
       <p></p>
       {authState.role==='admin'||authState.role==="manager"||authState.role==="financeAdmin"||authState.role==="planningAdmin" &&
       <div>
-        {projectData.status!=="done"&&<Button size="small" onClick={openModal}>Update SoftProject</Button>}
+        {projectData.status!=="done"?<Button size="small" onClick={openModal}>Update SoftProject</Button>:"This project is finished"}
         
       </div>
    }
