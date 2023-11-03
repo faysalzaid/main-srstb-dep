@@ -43,17 +43,16 @@ import { useParams } from "react-router-dom/cjs/react-router-dom";
 
 
 function SoftItemsDetail(props) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function openModal() {
-    setIsModalOpen(true);
-  }
-
-  function closeModal() {
-    setIsModalOpen(false);
-  }
-
+    const [isOpen,setIsOpen] = useState(false)
   const {id} = useParams()
+
+  const closeModal = ()=>{
+    setIsOpen(false)
+}
+const openModal = ()=>{
+    setIsOpen(true)
+}
+
 
   // const [companyData,setCompanyData] = useState([])
   const [projectForm, setProjectForm] = useState({
@@ -124,9 +123,7 @@ function SoftItemsDetail(props) {
     });
   };
 
-  useEffect(() => {
-    setFetchedResult(searchTerm.length < 1 ? projectData : searchResult);
-  }, [projectData, searchTerm]);
+
 
   const searchHandler = async (search) => {
     setSearchTerm(search);
@@ -271,7 +268,7 @@ function closeDone(){
         <Modal isOpen={isCheckOpen.open} onClose={closeCheck}>
           <ModalHeader>Confirm Action</ModalHeader>
           <ModalBody>
-            <form onSubmit={handleCheck}>
+            <form>
             <Label>
                     <span>Check Comment <span className="text-red-600 text-1xl">*</span></span>
                     <Textarea
@@ -298,7 +295,7 @@ function closeDone(){
       <Modal isOpen={isApproveOpen.open} onClose={closeApprove}>
           <ModalHeader>Confirm Action</ModalHeader>
           <ModalBody>
-            <form onSubmit={handleApprove}>
+            <form>
             <Label>
                     <span>Approve Comment <span className="text-red-600 text-1xl">*</span></span>
                     <Textarea
@@ -400,58 +397,23 @@ function closeDone(){
       {/* End of Delete Modal Section */}
 
 
-      {/* Search section */}
-      <div className="mb-5">
-        <label
-          htmlFor="default-search"
-          className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-        >
-          Search
-        </label>
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5 text-gray-500 dark:text-gray-400"
-              fill="none"
-              strokeWidth="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              ></path>
-            </svg>
-          </div>
-          <Input
-            type="search"
-            id="default-search"
-            value={searchTerm}
-         
-            onChange={(e) => searchHandler(e.target.value)}
-            className="block w-full p-4 pl-10 text-sm text-gray-900 dark:text-gray-100 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 
-            // dark:border-gray-600 dark://placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search By Name, Role, Email..."
-            required
-          />
-        </div>
-      </div>
-      {/* End of search List */}
 
-      <p></p>
-      {authState.role==='admin'||authState.role==="manager"||authState.role==="financeAdmin"||authState.role==="planningAdmin" ?
+
+   
       <div>
-        {projectData.status==="done"?"This project is finished":<Button size="small" onClick={openModal}>Update SoftProject</Button>}
+      {authState.role==='admin'||authState.role==="manager"||authState.role==="designAdmin"||authState.role==="planningAdmin"||authState.role==="contractadmin"||authState.role==="roadqualityAdmin" ?
+      <div>
+        <Button size="small" onClick={openModal}>Create SoftProject</Button>
+      </div>
+      :<p>Read Only</p>}
+     
         
       </div>
-   :<p>ReadOnly</p>}
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
+
+        <Modal isOpen={isOpen} onClose={closeModal}>
         <ModalHeader>Update Project Info</ModalHeader>
         <ModalBody>
-          <div className=" form_container w-full ">
+          <div className="form_container w-full ">
             <section className=" progress_bar">
               <section
                 className="progress"
