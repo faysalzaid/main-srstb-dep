@@ -190,8 +190,8 @@ const handleTrainees = (e) => {
   // console.log('This is e',e);
 };
 
-const handleTrainers = (e) => {
-    setProjectForm({...projectForm,trainers:e})
+const handleItems = (e) => {
+    setProjectForm({...projectForm,items:e})
     // console.log('This is e',e);
   };
 
@@ -400,15 +400,12 @@ function closeDone(){
 
 
    
+      {authState.role==='admin'||authState.role==="manager"||authState.role==="financeAdmin"||authState.role==="planningAdmin" ?
       <div>
-      {authState.role==='admin'||authState.role==="manager"||authState.role==="designAdmin"||authState.role==="planningAdmin"||authState.role==="contractadmin"||authState.role==="roadqualityAdmin" ?
-      <div>
-        <Button size="small" onClick={openModal}>Create SoftProject</Button>
-      </div>
-      :<p>Read Only</p>}
-     
+        {projectData.status==="done"?"This project is finished":<Button size="small" onClick={openModal}>Update SoftProject</Button>}
         
       </div>
+   :<p>ReadOnly</p>}
 
         <Modal isOpen={isOpen} onClose={closeModal}>
         <ModalHeader>Update Project Info</ModalHeader>
@@ -533,7 +530,7 @@ function closeDone(){
                         className=" mb-6"
                         modules={SoftItemsDetail.modules}
                         value={projectForm.items}
-                        onChange={handleTrainers}
+                        onChange={handleItems}
                        
                         />
                   </Label>
