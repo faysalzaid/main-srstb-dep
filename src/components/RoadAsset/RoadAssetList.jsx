@@ -88,9 +88,7 @@ function RoadAssetList(props) {
   const [roadForm, setRoadFrom] = useState({
     origin: "",
     destination: "",
-    phone: "",
     length: "",
-    image: "",
     design: "",
     width: "",
     pavementType: "",
@@ -117,7 +115,7 @@ function RoadAssetList(props) {
         await axios
           .get(`${url}/roads`, { withCredentials: true })
           .then((resp) => {
-            console.log('Employees',resp.data);
+            // console.log('Employees',resp.data);
             if (resp.data.error) {
               setErrorMessage(resp.data.error);
             } else {
@@ -158,68 +156,34 @@ function RoadAssetList(props) {
     }
   };
 
-  const uploadEmployee = async (e) => {
-    e.preventDefault();
-    // console.log(e.target[0].files[0]);
-    const file = e.target[0].files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    await axios
-      .post(`${url}/employees/upload/file`, formData, { withCredentials: true })
-      .then((resp) => {
-        if (resp.data.error) {
-          setOpenError({ open: true, message: `${resp.data.error}` });
-        }
-        // console.log(resp.data);
-        setRoadData([...roadData, ...resp.data]);
-        setUplModal(false);
-        setOpenSuccess({ open: true, message: "Successfully Uploaded" });
-      })
-      .catch((error)=>{
-        if (error.response && error.response.data && error.response.data.error) {
-            setOpenError({open:true,message:`${error.response.data.error}`});
-          } else {
-            setOpenError({open:true,message:"An unknown error occurred"});
-          }
-    })
-  };
+
 
   const addEmployee = async (e) => {
     e.preventDefault();
       if(roadForm.origin===""||roadForm.destination===""||roadForm.length===""||roadForm.year===""||roadForm.condition==="") return setOpenError({open:true,message:"Please Provide Data with (*) red"})
       const formData = new FormData();
-      formData.append("origin", roadForm.origin);
-      formData.append("destination", roadForm.destination);
-      formData.append("length", roadForm.length);
-      formData.append("design", roadForm.design);
-      formData.append("pavementType", roadForm.pavementType);
-      formData.append("year", roadForm.year);
-      formData.append("contractor", roadForm.contractor);
-      formData.append("maintained", roadForm.maintained);
-      formData.append("condition", roadForm.condition);
-      formData.append("width", roadForm.width);
-      console.log(formData);
+      console.log(roadForm);
 
 
-    //   await axios
-    //     .post(`${url}/roads`, formData, { withCredentials: true })
-    //     .then((resp) => {
-    //       // console.log('from server',resp.data);
-    //       if (resp.data.error) {
-    //         setOpenError({ open: true, message: `${resp.data.error}` });
-    //       } else {
-    //         setRoadData((prev) => [...prev, resp.data]);
-    //         closeModal();
-    //         setOpenSuccess({ open: true, message: "Successfully Added" });
-    //       }
-    //     })
-    //     .catch((error)=>{
-    //       if (error.response && error.response.data && error.response.data.error) {
-    //           setOpenError({open:true,message:`${error.response.data.error}`});
-    //         } else {
-    //           setOpenError({open:true,message:"An unknown error occurred"});
-    //         }
-    //   })
+      await axios
+        .post(`${url}/roads`, roadForm, { withCredentials: true })
+        .then((resp) => {
+          // console.log('from server',resp.data);
+          if (resp.data.error) {
+            setOpenError({ open: true, message: `${resp.data.error}` });
+          } else {
+            setRoadData((prev) => [resp.data,...prev]);
+            closeModal();
+            setOpenSuccess({ open: true, message: "Successfully Added" });
+          }
+        })
+        .catch((error)=>{
+          if (error.response && error.response.data && error.response.data.error) {
+              setOpenError({open:true,message:`${error.response.data.error}`});
+            } else {
+              setOpenError({open:true,message:"An unknown error occurred"});
+            }
+      })
     
   };
 
@@ -246,7 +210,7 @@ function RoadAssetList(props) {
 
   const deleteEmployee = async () => {
     await axios
-      .delete(`${url}/roads/delete/${isDeleteOpen.id}`)
+      .delete(`${url}/roads/delete/${isDeleteOpen.id}`,{withCredentials:true})
       .then((resp) => {
         if (resp.data.error) {
           setErrorMessage(resp.data.error);
@@ -518,7 +482,7 @@ function RoadAssetList(props) {
 
                   
                   <Label>
-                    <span>Payment Type </span>
+                    <span>Pavement Type </span>
                     <Input
                       type="text"
                       className="mt-1"
@@ -635,8 +599,7 @@ function RoadAssetList(props) {
               <TableCell>Design Standard</TableCell>
               <TableCell>Carriage Width</TableCell>
               <TableCell>Pavement Type</TableCell>
-              <TableCell>Year of Construction</TableCell>
-              <TableCell>Contractor</TableCell>
+              <TableCell>Year of Construction</TableCell>            
               <TableCell>Year Maintained</TableCell>
               <TableCell>Pavement Condition</TableCell>
               <TableCell>Action</TableCell>
@@ -668,9 +631,7 @@ function RoadAssetList(props) {
                 <TableCell>
                   <span className="text-sm">{rd?.year}</span>
                 </TableCell>
-                <TableCell>
-                  <span className="text-sm">{rd?.contractor}</span>
-                </TableCell>
+             
                 <TableCell>
                   <span className="text-sm">{rd?.maintained}</span>
                 </TableCell>

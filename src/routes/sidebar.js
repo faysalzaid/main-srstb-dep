@@ -108,12 +108,12 @@ routes = [{
                 name: 'Roads',
                 roles: ['admin', 'roadquality', 'manager']
             },
-            {
-                path: '/app/members',
-                icon: 'FaPhoenixFramework',
-                name: 'Maintainance',
-                roles: ['admin', 'roadquality', 'manager']
-            },
+            // {
+            //     path: '/app/members',
+            //     icon: 'FaPhoenixFramework',
+            //     name: 'Maintainance',
+            //     roles: ['admin', 'roadquality', 'manager']
+            // },
 
 
 
