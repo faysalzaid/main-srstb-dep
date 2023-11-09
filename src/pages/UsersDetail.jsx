@@ -221,17 +221,23 @@ function UsersDetail(props) {
                   className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-indigo-600"
                   name="role"
                 >
-              {authState.role==='admin'?
+                  <option>Select</option>
+                  {authState.role==='admin'?
                   <option value="admin">Admin</option>
                   :""}
                   {authState.role==="admin" || authState.role==="manager"? <option value="manager">Manager</option> :""}
-                   <option value="pRelation">Public Relation</option>
+                  <option value="pRelation">Public Relation</option>
                   <option value="contractadmin">Contract Admin</option>
+                  <option value="contract">Contract</option>
+                  <option value="roadqualityAdmin">RoadQualityAdmin</option>
                   <option value="roadquality">Road Quality</option>
+                  {authState.role==="admin"||authState.role==="financeAdmin"||authState.role==="manager"?<option value="financeAdmin">FinanceAdmin</option>:""}
                   <option value="finance">Finance</option>
+                  <option value="designAdmin">DesignAdmin</option>
                   <option value="design">Design</option>
                   <option value="client">Client</option>
                   <option value="engineer">Engineer</option>
+                  <option value="planningAdmin">PlanningAdmin</option>
                   <option value="planning">Planning</option>
                   <option value="hr">HR</option>
                 </Field>
