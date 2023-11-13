@@ -292,7 +292,7 @@ const handleCloseError = (event, reason) => {
       </div>
       :<p>Read Only</p>}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <ModalHeader>Insert Client Info</ModalHeader>
+        <ModalHeader>Insert User Info</ModalHeader>
         <span style={{ color: "red" }}>{errorMessage}</span>
         <ModalBody>
           <Formik

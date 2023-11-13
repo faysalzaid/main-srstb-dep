@@ -12,19 +12,9 @@ function Members() {
 			<Navbar />
 			<div className="max-w-[1240px] mx-auto">
 				<h2 className="text-center font-bold text-2xl block border-b-4 border-orange-500 my-4">
-					Members Of The DDS Council
+					Members Of The SRS-Road Bureau Council
 				</h2>
 				<div className="flex flex-wrap items-center justify-center gap-4 mx-4">
-                    <MembersBox
-                        name="Member Name"
-                        role="Role of the Member"
-                        about="About the Member"
-                    />
-                    <MembersBox
-                        name="Member Name"
-                        role="Role of the Member"
-                        about="About the Member"
-                    />
                     <MembersBox
                         name="Member Name"
                         role="Role of the Member"
