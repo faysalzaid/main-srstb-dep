@@ -79,11 +79,12 @@ function Dashboard(props) {
         .get(`${url}/projects`, { withCredentials: true })
         .then((resp) => {
           if (resp.data.error) {
-            // console.log(resp.data.error);
-            
             return
           }
-          setProject(resp.data?.projects);
+          const sortedProjects = resp.data?.projects?.sort((a, b) => new Date(b.starttime) - new Date(a.starttime));
+          // console.log(sortedProjects);
+           const latestProjects = sortedProjects.slice(0, 5);
+          setProject(latestProjects);
           // console.log('projects',resp.data.projects);
           const ddata = resp.data?.projects?.filter((pr)=>{
             const currentDate = new Date();

@@ -271,7 +271,7 @@ const deleteCompany =async()=>{
 
 
       <div>
-        {authState.role==="admin" || authState.role==="hr" || authState.role==="manager" ?
+        {authState.role==="admin" || authState.role==="hr"|| authState.role==="financeAdmin" || authState.role==="manager" ?
         <Button size="small" onClick={openModal} className="custom-button">Add Company</Button>
         :"Read Only"}
       </div>
