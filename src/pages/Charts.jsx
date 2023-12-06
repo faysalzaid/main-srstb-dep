@@ -35,7 +35,9 @@ useEffect(()=>{
         // console.log(resp.data.error);
         return
       }
-    setProject(resp.data.projects)
+      const sortedProjects = resp.data?.projects?.sort((a, b) => new Date(b.starttime) - new Date(a.starttime));
+      const latestProjects = sortedProjects.slice(0, 5);
+      setProject(latestProjects);
     // console.log(resp.data.projects);
     
     
