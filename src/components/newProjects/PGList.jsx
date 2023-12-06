@@ -148,7 +148,7 @@ const PgList = () => {
           distance:parseFloat(formValues.distance)
 
         }
-        console.log(request);
+        // console.log(request);
         axios.post(`${url}/projects`,request,{withCredentials:true}).then((resp)=>{
             if(resp.data.error){
               setOpenError({open:true,message:`${resp.data.error}`})
