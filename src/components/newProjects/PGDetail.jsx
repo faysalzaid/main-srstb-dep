@@ -524,7 +524,7 @@ navWrapper.classList.remove('active')
         <TableContainer>
         {/* Calendar section */}
         <div className='flex mb-2'>
-        {authState.role==="admin" || authState.role==="engineer" || authState.role==="manager" || authState.role==="planningAdmin" || authState.role==="financeAdmin" ?
+        {authState.role==="admin" || authState.role==="engineer" || authState.role==="manager" || authState.role==="planningAdmin" || authState.role==="financeAdmin" ||authState.role==="contractadmin"?
         <Button size="small" className="ml-0" onClick={openModal}>Update Project</Button>
         :<Badge className="mt-2">Read Only</Badge>}
 
@@ -535,7 +535,7 @@ navWrapper.classList.remove('active')
         </div>
         <div className=''>
         <Badge type={project.approved?"success":"danger"}>{project.approved?"Approved By Planning":"Didn't Get Approved By Planning"}</Badge>
-        {authState.role==='planningAdmin' || authState.role==='admin' || authState.role==="manager" || authState.role==="financeAdmin"?
+        {authState.role==='planningAdmin' || authState.role==='admin'||authState.role==="contractadmin" || authState.role==="manager" || authState.role==="financeAdmin"?
         <Button onClick={projectApproval} size="small" className="ml-4" style={{background:project.approved?'green':'red'}} >{project.approved?"UnApprove":"Approve"}</Button>
         :""}
         </div>
