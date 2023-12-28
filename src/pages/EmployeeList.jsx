@@ -299,7 +299,7 @@ function EmployeeList(props) {
 
   const deleteEmployee = async () => {
     await axios
-      .get(`${url}/employees/delete/${isDeleteOpen.id}`)
+      .get(`${url}/employees/delete/${isDeleteOpen.id}`,{withCredentials:true})
       .then((resp) => {
         if (resp.data.error) {
           setErrorMessage(resp.data.error);
