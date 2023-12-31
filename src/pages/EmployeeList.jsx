@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import InfoCard from "../components/Cards/InfoCard";
+import RoundIcon from "../components/RoundIcon";
 import PageTitle from "../components/Typography/PageTitle";
 import SectionTitle from "../components/Typography/SectionTitle";
+import {  MoneyIcon, PeopleIcon, } from "../icons";
+
 import axios from "axios";
 import { ErrorAlert, SuccessAlert } from "components/Alert";
 import { EmplFileDownload } from "../config/urlConfig";
@@ -113,6 +117,7 @@ function EmployeeList(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [fetchedResult, setFetchedResult] = useState([]);
   const [areaData, setAreaData] = useState([]);
+  const [countEmpl,setCountEmpl] = useState()
 
   // const {id} = useParams()
 
@@ -128,6 +133,8 @@ function EmployeeList(props) {
               setErrorMessage(resp.data.error);
             } else {
               setEmployeeData(resp.data);
+              setCountEmpl(resp.data.length)
+              // console.log(countEmpl);
               // setIma
             }
           })
@@ -211,6 +218,8 @@ function EmployeeList(props) {
         }
         // console.log(resp.data);
         setEmployeeData([...employeeData, ...resp.data]);
+        const data = [...employeeData,...resp.data]
+        setCountEmpl(data.length)
         setUplModal(false);
         setOpenSuccess({ open: true, message: "Successfully Uploaded" });
       })
@@ -262,6 +271,8 @@ function EmployeeList(props) {
             setOpenError({ open: true, message: `${resp.data.error}` });
           } else {
             setEmployeeData((prev) => [...prev, resp.data]);
+            const data = [...employeeData,...resp.data]
+            setCountEmpl(data.length)
             closeModal();
             setOpenSuccess({ open: true, message: "Successfully Added" });
           }
@@ -308,6 +319,7 @@ function EmployeeList(props) {
           (emp) => emp.id !== isDeleteOpen.id
         );
         setEmployeeData(newEmployee);
+        setCountEmpl(newEmployee.length)
         closeModal();
         // setSuccessMessage("Successfully Deleted");
         setOpenSuccess({ open: true, message: "Deleted Successfully" });
@@ -373,7 +385,17 @@ function EmployeeList(props) {
         horizontal="right"
       />
 
+
       <PageTitle>List of Employees</PageTitle>
+
+          <InfoCard title="Total Employees " value={countEmpl}>
+              <RoundIcon
+                icon={PeopleIcon}
+                iconColorClass="text-orange-500 dark:text-orange-100"
+                bgColorClass="bg-orange-100 dark:bg-orange-500"
+                className="mr-4 mb-4"
+              />
+            </InfoCard>
       <div>
         <label
           htmlFor="default-search"

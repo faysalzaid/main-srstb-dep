@@ -705,8 +705,6 @@ const PgList = () => {
             <TableRow>
               <TableCell>Project Name</TableCell>
               <TableCell>Contractor</TableCell>
-              <TableCell>Start Date</TableCell>
-              <TableCell>End Date</TableCell>
               <TableCell>T.Cost</TableCell>
               <TableCell>Utiliz.Cost</TableCell>
               <TableCell>Approved</TableCell>
@@ -730,12 +728,9 @@ const PgList = () => {
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>
-                  <span className="text-sm">{project.starttime}</span>
-                </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <span className="text-sm">{project.endtime}{getDaysPassed(project.endtime)>0? <Badge className="text-sm ml-2" type='danger'>{getDaysPassed(project.endtime)} days passed</Badge>:''}</span>
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <span className="text-sm">ETB {(parseFloat(project.totalCost).toLocaleString('en-Us',{maximumFractionDigits:2}))}</span>
                 </TableCell>
