@@ -144,6 +144,7 @@ const InvoiceList = () => {
     
               }else{
                 setInvoices(resp.data)
+                console.log(resp.data);
               }
           })
     

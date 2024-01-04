@@ -86,7 +86,7 @@ const printSection = () => {
         </div>
         <div>
           <h2 className="text-xl font-bold mb-2">Price</h2>
-          <p className='font-bold'><Badge>Total</Badge>ETB {project.map((pr)=>pr.id===invoiceData?.ProjectId?parseFloat(pr.totalCost).toLocaleString():"")}</p>
+          <p className='font-bold'><Badge>Total</Badge>ETB {project.map((pr)=>pr.id===invoiceData?.ProjectId?parseFloat(invoiceData?.total).toLocaleString():"")}</p>
           <p className='font-bold'><Badge style={{color:'red'}}>Due Amount</Badge>: ETB {parseFloat(invoiceData?.amountDue)?.toLocaleString()}</p>
         </div>
       </div>

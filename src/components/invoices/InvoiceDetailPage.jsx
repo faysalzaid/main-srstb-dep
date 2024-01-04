@@ -16,7 +16,7 @@ import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 import { FaList } from 'react-icons/fa';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from '@windmill/react-ui'
 import { Input, HelperText, Label, Select, Textarea } from '@windmill/react-ui'
-
+import { FaPlusCircle,FaMinusCircle } from "react-icons/fa";
 
 import {
   TableBody,
@@ -54,7 +54,8 @@ const InvoiceDetailPage = () => {
     const [data, setData] = useState([])
     const [project,setProject] = useState([])
     const [countsData,setCountsData] = useState({ projectCount:"",bidCount:"",activeProjects:"",completedProjects:""})
-  
+    const [newAmount,setNewAmount]= useState(0)
+    const [minusAmount,setMinusAmount] = useState(0)
     const {id} = useParams()
   
     const [isShowingPayments, setIsShowingPayments] = useState(false);
@@ -68,16 +69,16 @@ const InvoiceDetailPage = () => {
         const getData = async()=>{
           await axios.get(`${url}/projects`,{withCredentials:true}).then((resp)=>{
             if(resp.data.error){
-              // console.log(resp.data.error);
             }else{
               setProject(resp.data.projects)
             }
           })
-  
+          
           await axios.get(`${url}/invoice/${id}`,{withCredentials:true}).then((resp)=>{
             if(resp.data.error){
               // setopenerr
             }else{
+              console.log(resp.data);
               setInvoiceData(resp.data)
               setFormValues({date:resp.data.date,notes:resp.data.notes,sequential:resp.data.sequential,totalPaid:"",total:resp.data.total,UserId:resp.data.UserId,ProjectId:resp.data.ProjectId,PaymentModeId:resp.data.PaymentModeId,})
 
@@ -173,7 +174,51 @@ const handleSubmit = async(e)=>{
   };
 
 
-   
+   const addNewAmount = async()=>{
+
+    if(newAmount===0) return setOpenError({open:true,message:"Please Insert Amount"})
+    await axios.post(`${url}/invoice/update/${id}`,{newAmount},{withCredentials:true}).then((resp)=>{
+      // console.log(resp.data);
+      if(resp.data.error){
+        setOpenError({open:true,message:`${resp.data.error}`})
+      }else{
+        setInvoiceData(resp.data)
+        setOpenSuccess({open:true,message:"Succesfully Updated"})
+        setNewAmount(0)
+        onClose()
+      }
+    }).catch((error)=>{
+      if (error.response && error.response.data && error.response.data.error) {
+          setOpenError({open:true,message:`${error.response.data.error}`});
+        } else {
+          setOpenError({open:true,message:"An unknown error occurred"});
+        }
+  })
+    
+   }
+
+
+   const removeAmount = async()=>{
+    if(minusAmount===0) return setOpenError({open:true,message:"Please Insert remove Amount"})
+    await axios.post(`${url}/invoice/reverseupdate/${id}`,{minusAmount},{withCredentials:true}).then((resp)=>{
+      // console.log(resp.data);
+      if(resp.data.error){
+        setOpenError({open:true,message:`${resp.data.error}`})
+      }else{
+        setInvoiceData(resp.data)
+        setOpenSuccess({open:true,message:"Succesfully Updated"})
+        setMinusAmount(0)
+        onClose()
+      }
+    }).catch((error)=>{
+      if (error.response && error.response.data && error.response.data.error) {
+          setOpenError({open:true,message:`${error.response.data.error}`});
+        } else {
+          setOpenError({open:true,message:"An unknown error occurred"});
+        }
+  })
+    
+   }
 
 
 
@@ -268,6 +313,46 @@ const handleSubmit = async(e)=>{
               
             </Select>
           </Label>
+
+          <Label>
+          <span>Add Amount</span>
+          <div className='flex'>
+            <Input
+              type="number"
+              step="0.001"
+              // value={formValues.date}
+              className="mt-1"
+              name="newAmount"
+              onChange={(e)=>setNewAmount(e.target.value)}
+              // required
+            />
+            <FaPlusCircle className='mt-3 ml-2 w-5 h-5 text-green-500' onClick={()=>addNewAmount()}/>
+
+          </div>
+            
+          
+          </Label>
+
+
+          <Label>
+          <span>Deduct Amount</span>
+          <div className='flex'>
+            <Input
+              type="number"
+              step="0.001"
+              // value={formValues.date}
+              className="mt-1"
+              name="minusAmount"
+              onChange={(e)=>setMinusAmount(e.target.value)}
+              // required
+            />
+            <FaMinusCircle className='mt-3 ml-2 w-5 h-5 text-red-500' onClick={()=>removeAmount()}/>
+
+          </div>
+            
+          
+          </Label>
+
         </div>
         <div className="hidden sm:block">
 
