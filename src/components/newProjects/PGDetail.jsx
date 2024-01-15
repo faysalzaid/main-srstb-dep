@@ -49,6 +49,7 @@ import ReportSection from 'components/ReportSection/ReportSection'
 import OrderFileSection from 'components/OrderFileSection/OrderFileSection'
 import VariationFileSection from 'components/VariationFile/VariationFileSection'
 import DesignFileSection from 'components/DesignFiles/DesignFilesSection'
+import ConsultantSection from 'components/Consultants/ConsultantSection'
 
 
 
@@ -66,6 +67,7 @@ const PgDetail = () => {
     const [showOverview,setShowOverview] = useState(true)
     const [showBudget,setShowBudget] = useState(false)
     const [showProcurement,setShowProcurement] = useState(false)
+    const [showConsultants,setShowConsultants] = useState(false)
     const [showComments,setShowComments] = useState(false)
     const [showBid,setShowBid] = useState(false)
     const [showAwards,setShowAwards] = useState(false)
@@ -132,7 +134,7 @@ const handleCloseError = (event, reason) => {
             if(resp.data.error){
               setOpenError({open:true,message:`${resp.data.error}`})
             }
-            // console.log(resp.data);
+            console.log(resp.data);
           setProject(resp.data)
           setBudgets(resp.data.yearlyBudgets)
           // console.log(resp.data.Invoice.length);
@@ -234,14 +236,32 @@ setTimeout(() => {
   handleActiveLink()
 }, 1000);
 
+
+function handleConsultants(){
+setShowProcurement(false)
+setShowAwards(false)
+setShowOverview(false)
+setShowContract(false)
+setShowBudget(false)
+setShowBid(false)
+setShowReport(false)
+setShowOrderFiles(false)
+setShowVariationFiles(false)
+setShowDesignFiles(false)
+setShowComments(false)
+setShowConsultants(true)
+
+}
+
 function handleOverview(){
+  setShowComments(false)
 setShowProcurement(false)
 setShowAwards(false)
 setShowOverview(true)
 setShowContract(false)
 setShowBudget(false)
 setShowBid(false)
-setShowComments(false)
+setShowConsultants(false)
 setShowReport(false)
 setShowOrderFiles(false)
 setShowVariationFiles(false)
@@ -250,14 +270,15 @@ setShowDesignFiles(false)
 
 function handleOrderFiles(){
   setShowOrderFiles(true)
-  setShowProcurement(false)
+setShowComments(false)  
+setShowProcurement(false)
   setShowAwards(false)
   setShowContract(false)
   setShowOverview(false)
   setShowBudget(false)
   setShowBid(false)
-  setShowComments(false)
-  setShowReport(false)
+  setShowConsultants(false)
+    setShowReport(false)
   setShowVariationFiles(false)
 setShowDesignFiles(false)
 
@@ -267,13 +288,14 @@ setShowDesignFiles(false)
 function handleVariationFiles(){
   setShowVariationFiles(true)
   setShowOrderFiles(false)
+  setShowComments(false)
   setShowProcurement(false)
   setShowAwards(false)
   setShowContract(false)
   setShowOverview(false)
   setShowBudget(false)
   setShowBid(false)
-  setShowComments(false)
+  setShowConsultants(false)
   setShowReport(false)
   setShowDesignFiles(false)
 
@@ -284,13 +306,14 @@ function handleDesignFiles(){
   setShowDesignFiles(true)
   setShowVariationFiles(false)
   setShowOrderFiles(false)
+  setShowComments(false)
   setShowProcurement(false)
   setShowAwards(false)
   setShowContract(false)
   setShowOverview(false)
   setShowBudget(false)
   setShowBid(false)
-  setShowComments(false)
+  setShowConsultants(false)
   setShowReport(false)
 
 
@@ -303,9 +326,10 @@ function handleBids(){
   setShowOverview(false)
   setShowBudget(false)
   setShowBid(true)
-  setShowComments(false)
+  setShowConsultants(false)
   setShowReport(false)
   setShowOrderFiles(false)
+  setShowComments(false)
   setShowVariationFiles(false)
 setShowDesignFiles(false)
 
@@ -322,6 +346,7 @@ function handleBudgets(){
   setShowComments(false)
   setShowReport(false)
   setShowOrderFiles(false)
+  setShowConsultants(false)
   setShowVariationFiles(false)
 setShowDesignFiles(false)
   }
@@ -336,6 +361,7 @@ setShowBid(false)
 setShowComments(false)
 setShowReport(false)
 setShowOrderFiles(false)
+setShowConsultants(false)
 setShowVariationFiles(false)
 setShowDesignFiles(false)
 }
@@ -350,6 +376,7 @@ function handleComments(){
   setShowComments(true)
   setShowReport(false)
   setShowOrderFiles(false)
+  setShowConsultants(false)
   setShowVariationFiles(false)
 setShowDesignFiles(false)
   }
@@ -365,6 +392,7 @@ setShowDesignFiles(false)
     setShowComments(false)
     setShowReport(false)
     setShowOrderFiles(false)
+    setShowConsultants(false)
     setShowVariationFiles(false)
 setShowDesignFiles(false)
     }
@@ -380,6 +408,7 @@ setShowDesignFiles(false)
       setShowComments(false)
       setShowReport(false)
       setShowOrderFiles(false)
+      setShowConsultants(false)
       setShowVariationFiles(false)
 setShowDesignFiles(false)
    
@@ -397,6 +426,7 @@ setShowDesignFiles(false)
       setShowBid(false)
       setShowComments(false)
       setShowOrderFiles(false)
+      setShowConsultants(false)
       setShowVariationFiles(false)
 setShowDesignFiles(false)
    
@@ -747,6 +777,7 @@ navWrapper.classList.remove('active')
             <li className='nav-link active dark:text-gray-300' onClick={()=>{handleOverview(); hideNav()}}><CgMenuGridR/>Overview</li>
             
             <li className='nav-link dark:text-gray-300' onClick={()=>{handleBids(); hideNav()}}><VscFiles />Bids</li>
+            <li className='nav-link dark:text-gray-300' onClick={()=>{handleConsultants(); hideNav()}}><VscFiles />Consultant</li>
             <li className='nav-link dark:text-gray-300' onClick={()=>{handleBudgets(); hideNav()}}><GrTextAlignLeft />Budgets</li>
             <li className='nav-link dark:text-gray-300' onClick={()=>{handleContracts(); hideNav()}}><AiFillFile />Contracts</li>
             <li className='nav-link dark:text-gray-300' onClick={()=>{handleReports(); hideNav()}}><BiCheckCircle/> Reports</li>
@@ -769,6 +800,7 @@ navWrapper.classList.remove('active')
           {showContract&&<ContractSection project={project} id={id}/>}
           {showBudget&&<BudgetList id={id} budgets={budgets} setBudgets={setBudgets} invoiceIds={project?.Invoice?.id} project={project}/>}
           {showBid&&<BidSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}
+          {showConsultants&&<ConsultantSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}
           {showComments&&<CommentSection project={project} id={id}/>}
           {showAwards&&<AwardSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}
           {showReport&&<ReportSection bid={bids} project={project} users={usersData} setBids={setBids} setProject={setProject}/>}

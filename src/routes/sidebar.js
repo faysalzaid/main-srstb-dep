@@ -126,6 +126,12 @@ routes = [{
         name: 'Archives',
         roles: ['admin', 'engineer', 'archive', 'manager']
     },
+    {
+        path: '/app/consultants',
+        icon: 'FaDashcube',
+        name: 'Consultants',
+        roles: ['admin', 'financeAdmin', 'manager', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin']
+    },
 
     {
 

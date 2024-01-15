@@ -205,6 +205,14 @@ const SoftItemsDetail = lazy(() =>
     import ("../components/SoftProjects/SoftItemsDetail")
 );
 
+const ConsultantList = lazy(() =>
+    import ("../pages/ConsultantList")
+);
+
+const ConsultantDetail = lazy(() =>
+    import ("../pages/ConsultantDetail")
+);
+
 /**
  * ⚠ These are internal routes!
  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -636,6 +644,16 @@ const routes = [{
     {
         path: "/softItems/:id",
         component: SoftItemsDetail,
+        roles: ['admin', 'financeAdmin', 'manager', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin'],
+    },
+    {
+        path: "/consultants",
+        component: ConsultantList,
+        roles: ['admin', 'financeAdmin', 'manager', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin'],
+    },
+    {
+        path: "/consultants/:id",
+        component: ConsultantDetail,
         roles: ['admin', 'financeAdmin', 'manager', 'planningAdmin', 'designAdmin', 'contractadmin', 'roadqualityAdmin'],
     },
 ];

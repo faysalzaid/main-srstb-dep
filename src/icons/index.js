@@ -61,7 +61,7 @@ import {
     FaRegLifeRing,
     FaAccusoft,
     FaRing,
-    FaRegListAlt
+    FaRegListAlt,FaDashcube
 } from 'react-icons/fa';
 import { BsCapsulePill } from 'react-icons/bs';
 
@@ -128,6 +128,7 @@ export {
     FaRegLifeRing,
     FaAccusoft,
     FaRing,
-    FaRegListAlt
+    FaRegListAlt,
+    FaDashcube
 
 }
