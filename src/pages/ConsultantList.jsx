@@ -273,7 +273,7 @@ const openDelete = (id)=>{
         </div>
        
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <ModalHeader>Insert BidInfo Info</ModalHeader>
+          <ModalHeader>Insert Consultant Info</ModalHeader>
           <span style={{color:'red'}}>{errorMessage}</span>
           <ModalBody>
             
@@ -364,46 +364,7 @@ const openDelete = (id)=>{
   
         <SectionTitle></SectionTitle>
         {/* Card Icons */}
-        <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-
-
-        <InfoCard title="Total Bids Registered" value={bidCount}>
-          <RoundIcon
-            icon={MoneyIcon}
-            iconColorClass="text-green-500 dark:text-green-100"
-            bgColorClass="bg-green-100 dark:bg-green-500"
-            className="mr-4"
-          />
-        </InfoCard>
-        <InfoCard title="Processing Bids" value={processing}>
-          <RoundIcon
-            icon={OutlineCogIcon}
-            iconColorClass="text-blue-500 dark:text-blue-100"
-            bgColorClass="bg-blue-100 dark:bg-blue-500"
-            className="mr-4"
-          />
-        </InfoCard>
-        <InfoCard title="Approved Bids" value={approved}>
-          <RoundIcon
-            icon={BellIcon}
-            iconColorClass="text-yellow-500 dark:text-yellow-100"
-            bgColorClass="bg-yellow-100 dark:bg-yellow-500"
-            className="mr-4"
-          />
-        </InfoCard>
-        
-        <InfoCard title="Rejected Bids" value={rejected}>
-          <RoundIcon
-            icon={BellIcon}
-            iconColorClass="text-red-500 dark:text-red-100"
-            bgColorClass="bg-red-100 dark:bg-yellow-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-
-      </div> .  
-
+       
       {/* End of Card Icons */}
         {successMessage?
         <div className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">

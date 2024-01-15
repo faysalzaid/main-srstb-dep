@@ -327,7 +327,7 @@ function ConsultantDetail(props) {
          
           {bidsData.evaluationStatus==='YES'?
                 <button className="mt-2 bg-green-500 text-white font-bold py-2 px-4 rounded-xl h-8 flex items-center" onClick={()=>openEvModel()}>
-                <span>Bid is Evaluated</span>
+                <span>Consultant Info is Evaluated</span>
                 <MdArrowForward className="ml-1" size={20} />
               </button>
             :<button className="mt-2 bg-red-500 text-white font-bold py-2 px-4 rounded-xl h-8 flex items-center" onClick={()=>openEvModel()}>

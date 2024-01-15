@@ -104,7 +104,7 @@ useEffect(()=>{
             const stringFied = JSON.stringify(usersData);
             setAuthState({ id: data?.id, username: data?.name, email: data?.email, image: data?.image, role: data?.role, state: true });
             localStorage.setItem('User', stringFied);
-            console.log('called authcontext');
+            // console.log('called authcontext');
   
         } catch (error) {
             // setAuthState({ id: '', username: '', email: '', image: '', role: '', state: false });
